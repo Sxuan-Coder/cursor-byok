@@ -6,7 +6,7 @@ import { appState, saveIncludeCacheWriteInHitRate } from "@/state/appState";
 import { formatCompactInteger, formatInteger } from "@/utils/numberFormat";
 import { computed, ref } from "vue";
 
-const emit = defineEmits(["refresh", "open-ad"]);
+const emit = defineEmits(["refresh"]);
 
 const TOKEN_PRICE_PER_MILLION = {
   input: 5,
@@ -27,14 +27,6 @@ const props = defineProps({
   error: {
     type: String,
     default: "",
-  },
-  homeAd: {
-    type: Object,
-    default: null,
-  },
-  homeAds: {
-    type: Array,
-    default: () => [],
   },
 });
 
@@ -195,19 +187,6 @@ const costTooltipContent = computed(() =>
   ].join("\n"),
 );
 
-function normalizeHomeAd(item, index) {
-  const source = item && typeof item === "object" ? item : {};
-  const title = typeof source.title === "string" ? source.title.trim() : "";
-  if (!title) {
-    return null;
-  }
-  return {
-    id: typeof source.id === "string" && source.id.trim() ? source.id.trim() : String(index + 1),
-    title,
-    subtitle: typeof source.subtitle === "string" ? source.subtitle.trim() : "",
-  };
-}
-
 async function toggleIncludeCacheWriteInHitRate(value) {
   const nextValue = Boolean(value);
   homeMetricsConfigSaving.value = true;
@@ -223,23 +202,17 @@ async function toggleIncludeCacheWriteInHitRate(value) {
     homeMetricsConfigSaving.value = false;
   }
 }
-
-const normalizedHomeAds = computed(() => {
-  const list = Array.isArray(props.homeAds) && props.homeAds.length > 0 ? props.homeAds : [props.homeAd];
-  return list.map(normalizeHomeAd).filter(Boolean);
-});
-
-const hasHomeAd = computed(() => normalizedHomeAds.value.length > 0);
 </script>
 
 <template>
   <div>
     <div class="flex flex-col gap-4">
       <div class="flex items-center justify-between gap-4 h-[42px]">
-        <div v-if="!hasHomeAd" class="flex flex-col gap-1 w-[200px] shrink-0">
+        <div class="flex flex-col gap-1 w-[200px] shrink-0">
           <h2 class="text-[14px] font-medium text-white/80">会话统计</h2>
         </div>
-        <div v-else class="grid min-w-0  grid-cols-3 gap-2 shrink-0">
+        <!-- 广告位暂时停用。 -->
+        <!--
           <div
             v-for="ad in normalizedHomeAds"
             :key="ad.id"
@@ -270,6 +243,7 @@ const hasHomeAd = computed(() => normalizedHomeAds.value.length > 0);
             </div>
           </div>
         </div>
+        -->
         <div
           class="flex-1 center-row justify-end shrink-0 gap-2 text-xs text-[#6f6f6f] pr-4 w-[200px]"
         >

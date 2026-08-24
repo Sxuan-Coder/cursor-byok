@@ -4,7 +4,6 @@ import Card from "@/components/ui/Card.vue";
 import HomeMetricsCard from "@/components/HomeMetricsCard.vue";
 import CursorAccountCard from "@/components/CursorAccountCard.vue";
 import { useMessage } from "@/composables/useMessage";
-import { getAdRuntime } from "@/services/clientApi";
 import {
   appState,
   appViewState,
@@ -15,70 +14,8 @@ import {
   toUserError,
   toggleService,
 } from "@/state/appState";
-import { Events } from "@wailsio/runtime";
-import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 
-const AD_UPDATED_EVENT = "ad:updated";
-const OPEN_AD_EVENT = "cursor:open-ad";
 const message = useMessage();
-
-const adRuntime = ref(null);
-let unsubscribeAdUpdated = null;
-
-function asString(value) {
-  if (typeof value === "string") {
-    return value.trim();
-  }
-  if (typeof value === "number" || typeof value === "boolean") {
-    return String(value);
-  }
-  return "";
-}
-
-function asBoolean(value) {
-  return value === true || value === "true" || value === 1 || value === "1";
-}
-
-const homeAds = computed(() => {
-  const runtime = adRuntime.value && typeof adRuntime.value === "object" ? adRuntime.value : {};
-  const slots = Array.isArray(runtime.slots) && runtime.slots.length > 0 ? runtime.slots : [runtime];
-  return slots
-    .map((slot, index) => {
-      const item = slot && typeof slot === "object" ? slot : {};
-      const home = item.home && typeof item.home === "object" ? item.home : {};
-      const title = asString(home.title);
-      if (
-        !title ||
-        !asBoolean(item.available) ||
-        !asBoolean(item.enabled) ||
-        !asString(item.packageHash)
-      ) {
-        return null;
-      }
-      return {
-        id: asString(item.id) || String(index + 1),
-        title,
-        subtitle: asString(home.subtitle),
-      };
-    })
-    .filter(Boolean);
-});
-
-async function syncAdRuntimeQuietly() {
-  try {
-    adRuntime.value = await getAdRuntime();
-  } catch (_error) {
-    adRuntime.value = null;
-  }
-}
-
-function handleAdUpdated() {
-  void syncAdRuntimeQuietly();
-}
-
-function handleOpenHomeAd(slotId) {
-  window.dispatchEvent(new CustomEvent(OPEN_AD_EVENT, { detail: { slotId: asString(slotId) } }));
-}
 
 function showActionError(title, error) {
   const detail = String(error || "服务错误").trim() || "服务错误";
@@ -126,17 +63,6 @@ async function handleOpenModelConfig() {
     showActionError("打开失败", toUserError(error));
   }
 }
-
-onMounted(() => {
-  unsubscribeAdUpdated = Events.On(AD_UPDATED_EVENT, handleAdUpdated);
-  void syncAdRuntimeQuietly();
-});
-
-onBeforeUnmount(() => {
-  if (unsubscribeAdUpdated) {
-    unsubscribeAdUpdated();
-  }
-});
 </script>
 
 <template>
@@ -145,9 +71,7 @@ onBeforeUnmount(() => {
       :metrics="appState.homeMetrics"
       :loading="appState.homeMetricsLoading"
       :error="appState.homeMetricsError"
-      :home-ads="homeAds"
       @refresh="handleRefreshMetrics"
-      @open-ad="handleOpenHomeAd"
     />
 
     <Card>

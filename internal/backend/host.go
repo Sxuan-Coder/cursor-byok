@@ -11,7 +11,6 @@ import (
 	"sync"
 	"time"
 
-	"cursor/internal/ads"
 	"cursor/internal/appdata"
 	"cursor/internal/backend/forwarder"
 	"cursor/internal/backend/server"
@@ -283,7 +282,6 @@ func (host *Host) rebuildLocked(cfg serverconfig.Config) error {
 			server.ServerContext(),
 			server.ErrorEncoder(),
 		),
-		server.Mount(ads.RoutePrefix, ads.NewHTTPHandler(appdata.AdsRootPath())),
 		server.GET(healthPath,
 			server.Name("healthz"),
 			server.HTTP(),
