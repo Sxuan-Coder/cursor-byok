@@ -84,7 +84,9 @@ jobs:
         run: task common:update:build-assets
 
       - name: 初始化发布目录
-        run: task release:ensure:dir
+        env:
+          TAG_NAME: ${{ github.ref_name }}
+        run: mkdir -p "bin/release/${TAG_NAME#v}"
 
       - name: 构建发布产物
         run: task ${{ matrix.task }}
