@@ -125,12 +125,12 @@
       "refs": [
         {
           "file": "src/layouts/MainLayout.vue",
-          "line": 88,
+          "line": 87,
           "column": 34
         },
         {
           "file": "src/layouts/MainLayout.vue",
-          "line": 88,
+          "line": 87,
           "column": 52
         }
       ]
@@ -250,7 +250,7 @@
       "refs": [
         {
           "file": "src/layouts/MainLayout.vue",
-          "line": 40,
+          "line": 39,
           "column": 9
         }
       ]
@@ -532,18 +532,6 @@
         }
       ]
     },
-    "33d2d273e2bd5f88": {
-      "source": "打开使用教程失败",
-      "kind": "text",
-      "placeholders": 0,
-      "refs": [
-        {
-          "file": "src/layouts/MainLayout.vue",
-          "line": 104,
-          "column": 21
-        }
-      ]
-    },
     "3463c5585c246df9": {
       "source": "合计：{0}",
       "kind": "template",
@@ -713,7 +701,7 @@
         },
         {
           "file": "src/layouts/MainLayout.vue",
-          "line": 223,
+          "line": 206,
           "column": 11
         },
         {
@@ -951,7 +939,7 @@
       "refs": [
         {
           "file": "src/layouts/MainLayout.vue",
-          "line": 45,
+          "line": 44,
           "column": 9
         }
       ]
@@ -1110,7 +1098,7 @@
       "refs": [
         {
           "file": "src/layouts/MainLayout.vue",
-          "line": 44,
+          "line": 43,
           "column": 9
         }
       ]
@@ -1584,7 +1572,7 @@
       "refs": [
         {
           "file": "src/layouts/MainLayout.vue",
-          "line": 183,
+          "line": 174,
           "column": 15
         },
         {
@@ -1926,7 +1914,7 @@
       "refs": [
         {
           "file": "src/layouts/MainLayout.vue",
-          "line": 77,
+          "line": 76,
           "column": 36
         }
       ]
@@ -2452,7 +2440,7 @@
       "refs": [
         {
           "file": "src/layouts/MainLayout.vue",
-          "line": 32,
+          "line": 31,
           "column": 12
         }
       ]
@@ -2524,7 +2512,7 @@
       "refs": [
         {
           "file": "src/layouts/MainLayout.vue",
-          "line": 48,
+          "line": 47,
           "column": 12
         }
       ]
@@ -3179,7 +3167,7 @@
       "refs": [
         {
           "file": "src/layouts/MainLayout.vue",
-          "line": 39,
+          "line": 38,
           "column": 9
         }
       ]
@@ -3295,7 +3283,7 @@
       "refs": [
         {
           "file": "src/layouts/MainLayout.vue",
-          "line": 96,
+          "line": 95,
           "column": 21
         }
       ]
@@ -3361,7 +3349,7 @@
       "refs": [
         {
           "file": "src/layouts/MainLayout.vue",
-          "line": 50,
+          "line": 49,
           "column": 10
         }
       ]
@@ -3407,18 +3395,6 @@
           "file": "src/state/appState.js",
           "line": 987,
           "column": 40
-        }
-      ]
-    },
-    "fec45092945f8790": {
-      "source": "使用教程",
-      "kind": "text",
-      "placeholders": 0,
-      "refs": [
-        {
-          "file": "src/layouts/MainLayout.vue",
-          "line": 191,
-          "column": 15
         }
       ]
     }

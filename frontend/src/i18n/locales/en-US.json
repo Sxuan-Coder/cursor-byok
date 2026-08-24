@@ -35,7 +35,6 @@
   "30bb57a50caedc38": "e.g. For everyday code completion and Q&A",
   "3275d7e70bbdc3d5": "{0}'s {1}",
   "32b3c9a50003f77a": "Output tokens are estimated",
-  "33d2d273e2bd5f88": "Failed to open user guide",
   "3463c5585c246df9": "Total: {0}",
   "3468b57e3edbc599": "Aggregated from turn summaries scanned from the history.",
   "35076178fe79a210": "Configuration changed. Please test again.",
@@ -243,6 +242,5 @@
   "f61e03f047b786d5": "{0} max output tokens must be a positive integer",
   "f6e1c8b1a6970db5": "Current outbound requests do not use system proxy",
   "fac2a67ad87807c4": "OK",
-  "fb7a4c81729ed0ca": "Stopping...",
-  "fec45092945f8790": "User Guide"
+  "fb7a4c81729ed0ca": "Stopping..."
 }

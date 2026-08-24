@@ -1,7 +1,6 @@
 <script setup>
 import Button from "@/components/ui/Button.vue";
 import Card from "@/components/ui/Card.vue";
-import Tooltip from "@/components/ui/Tooltip.vue";
 import { useMessage } from "@/composables/useMessage";
 import { showModal } from "@/composables/useModal";
 import {
@@ -10,10 +9,8 @@ import {
   startCursorAccountLogin,
 } from "@/services/clientApi";
 import { toUserError } from "@/state/appState";
-import { Browser } from "@wailsio/runtime";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 
-const CURSOR_ACCOUNT_CONTRIBUTOR_URL = "https://github.com/aike0210";
 const message = useMessage();
 
 const cursorAccountStatus = ref({
@@ -64,14 +61,6 @@ const cursorAccountStateText = computed(() => {
 function showActionError(title, error) {
   const detail = String(error || "服务错误").trim() || "服务错误";
   message(`${title}：${detail}`);
-}
-
-async function handleOpenContributor() {
-  try {
-    await Browser.OpenURL(CURSOR_ACCOUNT_CONTRIBUTOR_URL);
-  } catch (error) {
-    showActionError("打开贡献者主页失败", toUserError(error));
-  }
 }
 
 async function refreshCursorAccountStatus() {
@@ -138,23 +127,6 @@ onUnmounted(() => {
           >
             {{ cursorAccountStateText }}
           </span>
-        </div>
-        <div class="flex shrink-0 items-center gap-1 text-xs text-[#737373]">
-          <span>@aike0210</span>
-          <Tooltip>
-            <div class="flex min-w-[220px] flex-col gap-2">
-              <div>感谢 @aike0210 对 Cursor 控制面账号功能的贡献。</div>
-              <button
-                type="button"
-                class="flex items-center gap-2 text-left text-[#8ab4f8] transition-colors duration-150 hover:text-[#b6d0fb]"
-                @click="handleOpenContributor"
-              >
-                <span class="icon-[mdi--github] text-[14px]"></span>
-                <span>github.com/aike0210</span>
-                <span class="icon-[mdi--open-in-new] text-[12px]"></span>
-              </button>
-            </div>
-          </Tooltip>
         </div>
       </div>
 
