@@ -83,6 +83,9 @@ jobs:
       - name: 更新构建资产（Info.plist / info.json / nfpm.yaml 等）
         run: task common:update:build-assets
 
+      - name: 初始化发布目录
+        run: task release:ensure:dir
+
       - name: 构建发布产物
         run: task ${{ matrix.task }}
 
