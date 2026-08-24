@@ -254,7 +254,7 @@ tasks:
           SCAN: '{{.SCAN}}'
 
   release:build:macos:amd64:
-    internal: true
+    internal: false
     cmds:
       - task: darwin:package:archive
         vars:
