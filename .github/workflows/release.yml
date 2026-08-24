@@ -129,24 +129,28 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           pattern: assets-*
-          path: bin/release/${{ env.TAG_NAME }}
+          path: release-dist
           merge-multiple: true
 
       - name: 生成发布说明与 update.json 更新清单
         run: |
-          ls -lh "bin/release/${TAG_NAME}/"
           VERSION="${TAG_NAME#v}"
+          export VERSION
+          mkdir -p "bin/release/${VERSION}"
+          cp release-dist/* "bin/release/${VERSION}/"
+          ls -lh "bin/release/${VERSION}/"
           go run ./scripts/release notes -config ./build/config.yml -out "bin/release/${VERSION}/.release-notes.md" -source release-notes.md
           go run ./scripts/release manifest -config ./build/config.yml -assets-dir "bin/release/${VERSION}" -out "bin/release/${VERSION}/update.json" -repo "${{ github.repository }}" -base-name cursor-byok -notes "bin/release/${VERSION}/.release-notes.md"
+          echo "RELEASE_DIR=bin/release/${VERSION}" >> "$GITHUB_ENV"
 
       - name: 创建 GitHub Release 并上传产物
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
           name: ${{ github.ref_name }}
-          body_path: bin/release/${{ env.TAG_NAME }}/.release-notes.md
+          body_path: ${{ env.RELEASE_DIR }}/.release-notes.md
           files: |
-            bin/release/${{ env.TAG_NAME }}/*
+            ${{ env.RELEASE_DIR }}/*
           draft: false
           prerelease: false
         env:
