@@ -150,7 +150,9 @@ jobs:
           name: ${{ github.ref_name }}
           body_path: ${{ env.RELEASE_DIR }}/.release-notes.md
           files: |
-            ${{ env.RELEASE_DIR }}/*
+            ${{ env.RELEASE_DIR }}/*.zip
+            ${{ env.RELEASE_DIR }}/*.tar.gz
+            ${{ env.RELEASE_DIR }}/update.json
           draft: false
           prerelease: false
         env:
