@@ -125,9 +125,6 @@ jobs:
           go-version: ${{ env.GO_VERSION }}
           cache: false
 
-      - name: 安装 task
-        run: go install github.com/go-task/task/v3/cmd/task@latest
-
       - name: 下载全部构建产物
         uses: actions/download-artifact@v4
         with:
@@ -138,8 +135,9 @@ jobs:
       - name: 生成发布说明与 update.json 更新清单
         run: |
           ls -lh "bin/release/${TAG_NAME}/"
-          task release:notes
-          task release:manifest RELEASE_REPO='${{ github.repository }}'
+          VERSION="${TAG_NAME#v}"
+          go run ./scripts/release notes -config ./build/config.yml -out "bin/release/${VERSION}/.release-notes.md" -source release-notes.md
+          go run ./scripts/release manifest -config ./build/config.yml -assets-dir "bin/release/${VERSION}" -out "bin/release/${VERSION}/update.json" -repo "${{ github.repository }}" -base-name cursor-byok -notes "bin/release/${VERSION}/.release-notes.md"
 
       - name: 创建 GitHub Release 并上传产物
         uses: softprops/action-gh-release@v2
