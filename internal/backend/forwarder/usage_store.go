@@ -12,8 +12,8 @@ import (
 
 const (
 	usageFileName          = "usage.json"
-	usageFileSchemaVersion = 2
-	usageRecentEventLimit  = 500
+	usageFileSchemaVersion = 3
+	usageRecentEventLimit  = 2000
 
 	usageEventKindProvider = "provider_call"
 	usageEventKindTurn     = "turn_finalized"
@@ -29,8 +29,22 @@ type usageFileDocument struct {
 	UpdatedAt     time.Time                 `json:"updated_at"`
 	Totals        usageFileTotals           `json:"totals"`
 	Daily         []usageFileDaily          `json:"daily"`
+	Models        map[string]usageFileModel `json:"models,omitempty"`
 	RecentEvents  []usageFileEvent          `json:"recent_events"`
 	EventIndex    map[string]usageFileEvent `json:"event_index,omitempty"`
+}
+
+// usageFileModel 按 provider::model 聚合的用量（schema v3 起记录）。
+type usageFileModel struct {
+	Provider         string    `json:"provider,omitempty"`
+	Model            string    `json:"model"`
+	ProviderCalls    int64     `json:"provider_calls"`
+	InputTokens      int64     `json:"input_tokens"`
+	OutputTokens     int64     `json:"output_tokens"`
+	CacheReadTokens  int64     `json:"cache_read_tokens"`
+	CacheWriteTokens int64     `json:"cache_write_tokens"`
+	TotalTokens      int64     `json:"total_tokens"`
+	LastSeenAt       time.Time `json:"last_seen_at,omitempty"`
 }
 
 type usageFileTotals struct {
@@ -63,6 +77,11 @@ type usageFileEvent struct {
 	Kind             string    `json:"kind,omitempty"`
 	Status           string    `json:"status,omitempty"`
 	At               time.Time `json:"at"`
+	RequestID        string    `json:"request_id,omitempty"`
+	Provider         string    `json:"provider,omitempty"`
+	Model            string    `json:"model,omitempty"`
+	DurationMS       int64     `json:"duration_ms,omitempty"`
+	ErrorText        string    `json:"error_text,omitempty"`
 	InputTokens      int64     `json:"input_tokens"`
 	OutputTokens     int64     `json:"output_tokens"`
 	CacheReadTokens  int64     `json:"cache_read_tokens"`
@@ -72,6 +91,7 @@ type usageFileEvent struct {
 }
 
 type usageFileDelta struct {
+	modelKey          string
 	providerCalls     int64
 	turnsTotal        int64
 	validTurnsTotal   int64
@@ -97,6 +117,11 @@ func (store *UsageFileStore) UpsertEvent(event usageFileEvent) error {
 	}
 	event.Kind = normalizeUsageEventKind(event.Kind)
 	event.Status = strings.TrimSpace(event.Status)
+	event.RequestID = strings.TrimSpace(event.RequestID)
+	event.Provider = strings.TrimSpace(event.Provider)
+	event.Model = strings.TrimSpace(event.Model)
+	event.ErrorText = strings.TrimSpace(event.ErrorText)
+	event.DurationMS = nonNegativeInt64(event.DurationMS)
 	if event.At.IsZero() {
 		event.At = time.Now().UTC()
 	} else {
@@ -124,6 +149,10 @@ func (store *UsageFileStore) UpsertEvent(event usageFileEvent) error {
 	if doc.EventIndex == nil {
 		doc.EventIndex = make(map[string]usageFileEvent)
 	}
+	if doc.Models == nil {
+		doc.Models = make(map[string]usageFileModel)
+	}
+	doc.UpdatedAt = time.Now().UTC()
 	oldEvent, found := doc.EventIndex[event.EventID]
 	if found {
 		applyUsageFileDelta(&doc, oldEvent.At, negateUsageFileDelta(usageFileEventDelta(oldEvent)))
@@ -133,7 +162,6 @@ func (store *UsageFileStore) UpsertEvent(event usageFileEvent) error {
 	doc.RecentEvents = trimRecentUsageEvents(doc.RecentEvents, usageRecentEventLimit)
 	doc.EventIndex = buildUsageEventIndex(doc.RecentEvents)
 	doc.SchemaVersion = usageFileSchemaVersion
-	doc.UpdatedAt = time.Now().UTC()
 	return writeJSONFileAtomic(store.path, doc)
 }
 
@@ -269,6 +297,7 @@ func usageFileEventDelta(event usageFileEvent) usageFileDelta {
 		return delta
 	default:
 		return usageFileDelta{
+			modelKey:         usageModelKey(event.Provider, event.Model),
 			providerCalls:    1,
 			inputTokens:      nonNegativeInt64(event.InputTokens),
 			outputTokens:     nonNegativeInt64(event.OutputTokens),
@@ -279,8 +308,22 @@ func usageFileEventDelta(event usageFileEvent) usageFileDelta {
 	}
 }
 
+// usageModelKey 生成 per-model 聚合的键：provider 与 model 用 "::" 连接。
+func usageModelKey(provider string, model string) string {
+	provider = strings.TrimSpace(provider)
+	model = strings.TrimSpace(model)
+	if model == "" {
+		model = "unknown"
+	}
+	if provider == "" {
+		return model
+	}
+	return provider + "::" + model
+}
+
 func negateUsageFileDelta(value usageFileDelta) usageFileDelta {
 	return usageFileDelta{
+		modelKey:          value.modelKey,
 		providerCalls:     -value.providerCalls,
 		turnsTotal:        -value.turnsTotal,
 		validTurnsTotal:   -value.validTurnsTotal,
@@ -306,6 +349,10 @@ func applyUsageFileDelta(doc *usageFileDocument, at time.Time, delta usageFileDe
 	doc.Totals.CacheReadTokens = clampNonNegativeInt64(doc.Totals.CacheReadTokens + delta.cacheReadTokens)
 	doc.Totals.CacheWriteTokens = clampNonNegativeInt64(doc.Totals.CacheWriteTokens + delta.cacheWriteTokens)
 	doc.Totals.TotalTokens = clampNonNegativeInt64(doc.Totals.TotalTokens + delta.totalTokens)
+
+	if key := strings.TrimSpace(delta.modelKey); key != "" {
+		applyUsageModelDelta(doc, key, delta)
+	}
 
 	date := at.UTC().Format("2006-01-02")
 	for index := range doc.Daily {
@@ -333,6 +380,34 @@ func applyUsageDailyDelta(item *usageFileDaily, delta usageFileDelta) {
 	item.CacheReadTokens = clampNonNegativeInt64(item.CacheReadTokens + delta.cacheReadTokens)
 	item.CacheWriteTokens = clampNonNegativeInt64(item.CacheWriteTokens + delta.cacheWriteTokens)
 	item.TotalTokens = clampNonNegativeInt64(item.TotalTokens + delta.totalTokens)
+}
+
+func applyUsageModelDelta(doc *usageFileDocument, key string, delta usageFileDelta) {
+	if doc == nil {
+		return
+	}
+	if doc.Models == nil {
+		doc.Models = make(map[string]usageFileModel)
+	}
+	item, ok := doc.Models[key]
+	if !ok {
+		parts := strings.SplitN(key, "::", 2)
+		if len(parts) == 2 {
+			item = usageFileModel{Provider: parts[0], Model: parts[1]}
+		} else {
+			item = usageFileModel{Model: parts[0]}
+		}
+	}
+	item.ProviderCalls = clampNonNegativeInt64(item.ProviderCalls + delta.providerCalls)
+	item.InputTokens = clampNonNegativeInt64(item.InputTokens + delta.inputTokens)
+	item.OutputTokens = clampNonNegativeInt64(item.OutputTokens + delta.outputTokens)
+	item.CacheReadTokens = clampNonNegativeInt64(item.CacheReadTokens + delta.cacheReadTokens)
+	item.CacheWriteTokens = clampNonNegativeInt64(item.CacheWriteTokens + delta.cacheWriteTokens)
+	item.TotalTokens = clampNonNegativeInt64(item.TotalTokens + delta.totalTokens)
+	if item.ProviderCalls > 0 {
+		item.LastSeenAt = doc.UpdatedAt
+	}
+	doc.Models[key] = item
 }
 
 func clampNonNegativeInt64(value int64) int64 {

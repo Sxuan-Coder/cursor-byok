@@ -7,6 +7,7 @@ type Summary struct {
 	InvalidTurnsTotal  int      `json:"invalidTurnsTotal"`
 	RequestTokensTotal int64    `json:"requestTokensTotal"`
 	PromptTokensTotal  int64    `json:"promptTokensTotal"`
+	OutputTokensTotal  int64    `json:"outputTokensTotal"`
 	CacheReadTokens    int64    `json:"cacheReadTokens"`
 	CacheWriteTokens   int64    `json:"cacheWriteTokens"`
 	CacheHitRate       *float64 `json:"cacheHitRate"`
