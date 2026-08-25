@@ -344,7 +344,13 @@ func (service *Service) recordTurnUsageSnapshot(stream *ActiveStream, conversati
 		if err := service.usageStore.UpsertEvent(usageFileEvent{
 			EventID:          usageEventID(requestID, effectiveModelCallID),
 			Kind:             usageEventKindProvider,
+			Status:           strings.TrimSpace(status),
 			At:               lastEventAt,
+			RequestID:        strings.TrimSpace(requestID),
+			Provider:         provider,
+			Model:            modelName,
+			DurationMS:       usageDurationMS(startedAt, lastEventAt),
+			ErrorText:        strings.TrimSpace(errorText),
 			InputTokens:      usage.InputTokens,
 			OutputTokens:     usage.OutputTokens,
 			CacheReadTokens:  usage.CacheReadTokens,
@@ -375,8 +381,15 @@ func (service *Service) recordTurnUsageSnapshot(stream *ActiveStream, conversati
 		}
 	}
 	_ = turnSeq
-	_ = startedAt
 	return nil
+}
+
+// usageDurationMS 计算一次 provider 调用的耗时（毫秒）。
+func usageDurationMS(startedAt time.Time, lastEventAt time.Time) int64 {
+	if startedAt.IsZero() || lastEventAt.Before(startedAt) {
+		return 0
+	}
+	return lastEventAt.Sub(startedAt).Milliseconds()
 }
 
 func (service *Service) recordTurnFinalizedSnapshot(stream *ActiveStream, conversationID string, turnSeq int64, requestID string, status string, errorText string) error {

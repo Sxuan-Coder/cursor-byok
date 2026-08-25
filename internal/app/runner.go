@@ -79,6 +79,7 @@ func Run(resources EmbeddedResources) error {
 	}
 	proxyService := bridge.NewProxyService(proxyServer, certManager, caCertPEM)
 	metricsService := bridge.NewMetricsService()
+	usageService := bridge.NewUsageService()
 	windowService := bridge.NewWindowService()
 	var updateManager *updater.Manager
 
@@ -90,6 +91,7 @@ func Run(resources EmbeddedResources) error {
 		Services: []application.Service{
 			application.NewService(proxyService),
 			application.NewService(metricsService),
+			application.NewService(usageService),
 			application.NewService(windowService),
 		},
 		Assets: application.AssetOptions{

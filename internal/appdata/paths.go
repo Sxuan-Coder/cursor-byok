@@ -45,6 +45,11 @@ func UsageFilePath() string {
 	return filepath.Join(HistoryRootPath(), "usage.json")
 }
 
+// PricingFilePath 返回模型单价配置文件路径。
+func PricingFilePath() string {
+	return filepath.Join(DataRootPath(), "pricing.json")
+}
+
 func AdsRootPath() string {
 	return filepath.Join(DataRootPath(), "ads")
 }

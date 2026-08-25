@@ -1,5 +1,29 @@
 {
   "entries": {
+    "0114f67cc9545113": {
+      "source": "输出 Tokens",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 243,
+          "column": 12
+        }
+      ]
+    },
+    "0164f80178a2f12a": {
+      "source": "全部模型",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 426,
+          "column": 31
+        }
+      ]
+    },
     "01aaebc96af187a9": {
       "source": "导入失败",
       "kind": "text",
@@ -24,7 +48,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1012,
+          "line": 1013,
           "column": 14
         }
       ]
@@ -41,6 +65,38 @@
         }
       ]
     },
+    "0488d8fddd952d28": {
+      "source": "缓存写",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 178,
+          "column": 14
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 394,
+          "column": 60
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 441,
+          "column": 60
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 484,
+          "column": 34
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 497,
+          "column": 79
+        }
+      ]
+    },
     "04f632dd4f034d5e": {
       "source": "{0} 的上下文窗口必须为正整数",
       "kind": "template",
@@ -48,7 +104,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 445,
+          "line": 446,
           "column": 14
         }
       ]
@@ -113,7 +169,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 481,
+          "line": 482,
           "column": 14
         }
       ]
@@ -132,6 +188,18 @@
           "file": "src/layouts/MainLayout.vue",
           "line": 87,
           "column": 52
+        }
+      ]
+    },
+    "0c6efa7d6b39f592": {
+      "source": "暂无可配置模型",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 487,
+          "column": 80
         }
       ]
     },
@@ -192,6 +260,11 @@
           "file": "src/components/HomeMetricsCard.vue",
           "line": 270,
           "column": 19
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 244,
+          "column": 12
         }
       ]
     },
@@ -214,7 +287,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 301,
+          "line": 302,
           "column": 14
         }
       ]
@@ -226,7 +299,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 989,
+          "line": 990,
           "column": 47
         }
       ]
@@ -296,6 +369,38 @@
         }
       ]
     },
+    "2087c777c06fefe5": {
+      "source": "输入",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 154,
+          "column": 14
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 391,
+          "column": 60
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 438,
+          "column": 60
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 481,
+          "column": 34
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 494,
+          "column": 74
+        }
+      ]
+    },
     "21296ab18ad9af25": {
       "source": "额外参数 JSON",
       "kind": "text",
@@ -313,8 +418,20 @@
         },
         {
           "file": "src/state/appState.js",
-          "line": 327,
+          "line": 328,
           "column": 36
+        }
+      ]
+    },
+    "2226fb25deb8ada1": {
+      "source": "用量成本报表",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 338,
+          "column": 46
         }
       ]
     },
@@ -325,12 +442,12 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 613,
+          "line": 614,
           "column": 32
         },
         {
           "file": "src/state/appState.js",
-          "line": 1136,
+          "line": 1137,
           "column": 21
         }
       ]
@@ -359,12 +476,17 @@
         },
         {
           "file": "src/views/Home.vue",
-          "line": 55,
+          "line": 56,
           "column": 21
         },
         {
           "file": "src/views/Home.vue",
-          "line": 63,
+          "line": 64,
+          "column": 21
+        },
+        {
+          "file": "src/views/Home.vue",
+          "line": 72,
           "column": 21
         }
       ]
@@ -388,7 +510,19 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 980,
+          "line": 981,
+          "column": 12
+        }
+      ]
+    },
+    "272499a5ea254c33": {
+      "source": "90天",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 116,
           "column": 12
         }
       ]
@@ -400,7 +534,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 484,
+          "line": 485,
           "column": 14
         }
       ]
@@ -414,6 +548,18 @@
           "file": "src/views/Config.vue",
           "line": 64,
           "column": 48
+        }
+      ]
+    },
+    "2b33d8eefb21926f": {
+      "source": "加载用量报表失败",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 254,
+          "column": 39
         }
       ]
     },
@@ -469,8 +615,13 @@
         },
         {
           "file": "src/state/appState.js",
-          "line": 1054,
+          "line": 1055,
           "column": 12
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 502,
+          "column": 64
         }
       ]
     },
@@ -517,17 +668,17 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 465,
+          "line": 466,
           "column": 16
         },
         {
           "file": "src/state/appState.js",
-          "line": 471,
+          "line": 472,
           "column": 16
         },
         {
           "file": "src/state/appState.js",
-          "line": 477,
+          "line": 478,
           "column": 16
         }
       ]
@@ -599,7 +750,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1046,
+          "line": 1047,
           "column": 14
         }
       ]
@@ -696,7 +847,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 430,
+          "line": 431,
           "column": 14
         }
       ]
@@ -742,7 +893,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1010,
+          "line": 1011,
           "column": 5
         }
       ]
@@ -768,6 +919,30 @@
           "file": "src/components/ui/ContentModal.vue",
           "line": 125,
           "column": 15
+        }
+      ]
+    },
+    "410af46e12827efd": {
+      "source": "按模型汇总",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 383,
+          "column": 42
+        }
+      ]
+    },
+    "42473fe4b2e70620": {
+      "source": "估算总成本",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 245,
+          "column": 12
         }
       ]
     },
@@ -850,7 +1025,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 442,
+          "line": 443,
           "column": 14
         }
       ]
@@ -864,6 +1039,26 @@
           "file": "src/components/HomeMetricsCard.vue",
           "line": 53,
           "column": 12
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 72,
+          "column": 12
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 378,
+          "column": 92
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 401,
+          "column": 71
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 447,
+          "column": 71
         }
       ]
     },
@@ -922,7 +1117,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 119,
+          "line": 120,
           "column": 12
         }
       ]
@@ -1021,7 +1216,7 @@
       "refs": [
         {
           "file": "src/router/index.js",
-          "line": 11,
+          "line": 12,
           "column": 38
         }
       ]
@@ -1033,7 +1228,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 304,
+          "line": 305,
           "column": 12
         }
       ]
@@ -1062,6 +1257,18 @@
         }
       ]
     },
+    "5c2b5a42a0f9fb5d": {
+      "source": "单价设置（美元 / 百万 Tokens）",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 477,
+          "column": 39
+        }
+      ]
+    },
     "5c55a67935af8f45": {
       "source": "全部",
       "kind": "text",
@@ -1070,6 +1277,11 @@
         {
           "file": "src/views/ModelConfig.vue",
           "line": 28,
+          "column": 12
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 117,
           "column": 12
         }
       ]
@@ -1083,6 +1295,18 @@
           "file": "src/views/ModelConfig.vue",
           "line": 58,
           "column": 12
+        }
+      ]
+    },
+    "5de87784573ccb1c": {
+      "source": "最近请求",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 421,
+          "column": 44
         }
       ]
     },
@@ -1105,12 +1329,12 @@
       "refs": [
         {
           "file": "src/views/Home.vue",
-          "line": 38,
+          "line": 39,
           "column": 21
         },
         {
           "file": "src/views/Home.vue",
-          "line": 48,
+          "line": 49,
           "column": 19
         }
       ]
@@ -1149,6 +1373,18 @@
         }
       ]
     },
+    "6320b4a8722a851f": {
+      "source": "状态",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 436,
+          "column": 49
+        }
+      ]
+    },
     "636e3deffc1e960a": {
       "source": "模型 {0}",
       "kind": "template",
@@ -1156,7 +1392,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 428,
+          "line": 429,
           "column": 20
         }
       ]
@@ -1180,7 +1416,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 320,
+          "line": 321,
           "column": 14
         }
       ]
@@ -1204,7 +1440,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 978,
+          "line": 979,
           "column": 14
         }
       ]
@@ -1216,7 +1452,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 436,
+          "line": 437,
           "column": 14
         }
       ]
@@ -1308,7 +1544,7 @@
         },
         {
           "file": "src/state/appState.js",
-          "line": 29,
+          "line": 30,
           "column": 31
         },
         {
@@ -1323,12 +1559,12 @@
         },
         {
           "file": "src/views/Home.vue",
-          "line": 21,
+          "line": 22,
           "column": 34
         },
         {
           "file": "src/views/Home.vue",
-          "line": 21,
+          "line": 22,
           "column": 52
         },
         {
@@ -1410,7 +1646,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1246,
+          "line": 1247,
           "column": 14
         }
       ]
@@ -1453,6 +1689,35 @@
           "file": "src/views/ModelConfig.vue",
           "line": 285,
           "column": 21
+        }
+      ]
+    },
+    "7557bb14046e0dc2": {
+      "source": "用量报表",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/router/index.js",
+          "line": 22,
+          "column": 39
+        },
+        {
+          "file": "src/views/Home.vue",
+          "line": 120,
+          "column": 68
+        }
+      ]
+    },
+    "7712439ae067b0a2": {
+      "source": "估算成本",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 396,
+          "column": 60
         }
       ]
     },
@@ -1514,7 +1779,7 @@
         },
         {
           "file": "src/state/appState.js",
-          "line": 205,
+          "line": 206,
           "column": 12
         },
         {
@@ -1533,6 +1798,18 @@
           "file": "src/composables/useConfigTransfer.js",
           "line": 56,
           "column": 16
+        }
+      ]
+    },
+    "7dab4009e48817bc": {
+      "source": "保存价格配置失败",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 320,
+          "column": 42
         }
       ]
     },
@@ -1555,7 +1832,7 @@
       "refs": [
         {
           "file": "src/views/Home.vue",
-          "line": 28,
+          "line": 29,
           "column": 21
         }
       ]
@@ -1572,7 +1849,7 @@
         },
         {
           "file": "src/state/appState.js",
-          "line": 1031,
+          "line": 1032,
           "column": 16
         }
       ]
@@ -1632,7 +1909,7 @@
       "refs": [
         {
           "file": "src/views/Home.vue",
-          "line": 45,
+          "line": 46,
           "column": 13
         }
       ]
@@ -1661,6 +1938,23 @@
         }
       ]
     },
+    "855754c132f37863": {
+      "source": "请求数",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 241,
+          "column": 12
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 390,
+          "column": 60
+        }
+      ]
+    },
     "8672864e90417138": {
       "source": "最高",
       "kind": "text",
@@ -1685,7 +1979,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 975,
+          "line": 976,
           "column": 14
         }
       ]
@@ -1699,6 +1993,18 @@
           "file": "src/composables/useConfigTransfer.js",
           "line": 41,
           "column": 15
+        }
+      ]
+    },
+    "88de4d457cdaf72b": {
+      "source": "输入 Tokens",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 242,
+          "column": 12
         }
       ]
     },
@@ -1723,6 +2029,18 @@
           "file": "src/components/ui/Switch.vue",
           "line": 9,
           "column": 41
+        }
+      ]
+    },
+    "8b6ff498515bcc2f": {
+      "source": "时间",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 434,
+          "column": 49
         }
       ]
     },
@@ -1762,7 +2080,7 @@
         },
         {
           "file": "src/router/index.js",
-          "line": 16,
+          "line": 17,
           "column": 39
         },
         {
@@ -1772,7 +2090,7 @@
         },
         {
           "file": "src/views/Home.vue",
-          "line": 111,
+          "line": 121,
           "column": 68
         }
       ]
@@ -1844,8 +2162,20 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 460,
+          "line": 461,
           "column": 14
+        }
+      ]
+    },
+    "91241c10acc76844": {
+      "source": "单价设置",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 342,
+          "column": 84
         }
       ]
     },
@@ -1862,6 +2192,11 @@
         {
           "file": "src/views/Config.vue",
           "line": 55,
+          "column": 14
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 504,
           "column": 14
         }
       ]
@@ -1945,12 +2280,12 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1351,
+          "line": 1352,
           "column": 32
         },
         {
           "file": "src/state/appState.js",
-          "line": 1372,
+          "line": 1373,
           "column": 32
         }
       ]
@@ -2010,7 +2345,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1052,
+          "line": 1053,
           "column": 14
         }
       ]
@@ -2027,6 +2362,18 @@
         }
       ]
     },
+    "9dc0825fba5422e4": {
+      "source": "加载中...",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 344,
+          "column": 16
+        }
+      ]
+    },
     "9e02529bcaef36c6": {
       "source": "模型渠道重复，请检查 url、modelID、apiKey、displayName、endpoint 组合",
       "kind": "text",
@@ -2034,7 +2381,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 488,
+          "line": 489,
           "column": 14
         }
       ]
@@ -2058,7 +2405,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 454,
+          "line": 455,
           "column": 14
         }
       ]
@@ -2070,12 +2417,12 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 998,
+          "line": 999,
           "column": 12
         },
         {
           "file": "src/state/appState.js",
-          "line": 1041,
+          "line": 1042,
           "column": 87
         }
       ]
@@ -2094,6 +2441,11 @@
           "file": "src/components/ModelEditor.vue",
           "line": 616,
           "column": 12
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 504,
+          "column": 14
         }
       ]
     },
@@ -2104,7 +2456,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1296,
+          "line": 1297,
           "column": 14
         },
         {
@@ -2177,6 +2529,18 @@
         }
       ]
     },
+    "a6779043da82c3e1": {
+      "source": "按请求、模型与天维度统计 Token 用量与估算成本",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 339,
+          "column": 47
+        }
+      ]
+    },
     "a693d69af48bfe48": {
       "source": "保存并测试",
       "kind": "text",
@@ -2240,7 +2604,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1027,
+          "line": 1028,
           "column": 16
         }
       ]
@@ -2252,8 +2616,52 @@
       "refs": [
         {
           "file": "src/views/Home.vue",
-          "line": 107,
+          "line": 116,
           "column": 47
+        }
+      ]
+    },
+    "adbb78f881627a6d": {
+      "source": "每日趋势",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 363,
+          "column": 44
+        }
+      ]
+    },
+    "ae5090199fb03c14": {
+      "source": "缓存读",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 170,
+          "column": 14
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 393,
+          "column": 60
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 440,
+          "column": 60
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 483,
+          "column": 34
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 496,
+          "column": 78
         }
       ]
     },
@@ -2290,6 +2698,18 @@
           "file": "src/components/ui/Switch.vue",
           "line": 11,
           "column": 38
+        }
+      ]
+    },
+    "aee88743413144a2": {
+      "source": "刷新",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 344,
+          "column": 16
         }
       ]
     },
@@ -2495,7 +2915,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 448,
+          "line": 449,
           "column": 14
         }
       ]
@@ -2521,6 +2941,18 @@
           "file": "src/components/HomeMetricsCard.vue",
           "line": 300,
           "column": 19
+        }
+      ]
+    },
+    "bf57da9dc1eebd52": {
+      "source": "估算成本($)",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 186,
+          "column": 14
         }
       ]
     },
@@ -2584,7 +3016,7 @@
       "refs": [
         {
           "file": "src/views/Home.vue",
-          "line": 110,
+          "line": 119,
           "column": 63
         }
       ]
@@ -2632,18 +3064,33 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1267,
+          "line": 1268,
           "column": 28
         },
         {
           "file": "src/state/appState.js",
-          "line": 1269,
+          "line": 1270,
           "column": 38
         },
         {
           "file": "src/state/appState.js",
-          "line": 1304,
+          "line": 1305,
           "column": 93
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 388,
+          "column": 49
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 435,
+          "column": 49
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 480,
+          "column": 14
         }
       ]
     },
@@ -2666,7 +3113,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 987,
+          "line": 988,
           "column": 51
         }
       ]
@@ -2702,7 +3149,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 296,
+          "line": 297,
           "column": 12
         }
       ]
@@ -2750,7 +3197,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 439,
+          "line": 440,
           "column": 14
         }
       ]
@@ -2774,7 +3221,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1215,
+          "line": 1216,
           "column": 14
         },
         {
@@ -2803,12 +3250,12 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 208,
+          "line": 209,
           "column": 38
         },
         {
           "file": "src/state/appState.js",
-          "line": 238,
+          "line": 239,
           "column": 50
         }
       ]
@@ -2825,7 +3272,7 @@
         },
         {
           "file": "src/state/appState.js",
-          "line": 310,
+          "line": 311,
           "column": 49
         }
       ]
@@ -2854,7 +3301,7 @@
         },
         {
           "file": "src/state/appState.js",
-          "line": 331,
+          "line": 332,
           "column": 36
         }
       ]
@@ -2900,6 +3347,35 @@
         }
       ]
     },
+    "da9e37af91872165": {
+      "source": "命中率",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 395,
+          "column": 60
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 442,
+          "column": 60
+        }
+      ]
+    },
+    "daaaf2c589049246": {
+      "source": "读取价格配置失败：{0}",
+      "kind": "template",
+      "placeholders": 1,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 297,
+          "column": 13
+        }
+      ]
+    },
     "daede9881787abe7": {
       "source": "备注",
       "kind": "text",
@@ -2912,7 +3388,7 @@
         },
         {
           "file": "src/state/appState.js",
-          "line": 260,
+          "line": 261,
           "column": 18
         }
       ]
@@ -2924,7 +3400,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 433,
+          "line": 434,
           "column": 14
         }
       ]
@@ -2936,7 +3412,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1009,
+          "line": 1010,
           "column": 5
         }
       ]
@@ -2989,7 +3465,7 @@
         },
         {
           "file": "src/state/appState.js",
-          "line": 1133,
+          "line": 1134,
           "column": 21
         }
       ]
@@ -3018,7 +3494,7 @@
         },
         {
           "file": "src/views/Home.vue",
-          "line": 106,
+          "line": 115,
           "column": 56
         }
       ]
@@ -3068,6 +3544,18 @@
           "file": "src/components/HomeMetricsCard.vue",
           "line": 169,
           "column": 5
+        }
+      ]
+    },
+    "e77e3d58b0dcffaa": {
+      "source": "耗时",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 437,
+          "column": 60
         }
       ]
     },
@@ -3126,7 +3614,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 214,
+          "line": 215,
           "column": 10
         }
       ]
@@ -3138,7 +3626,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1029,
+          "line": 1030,
           "column": 16
         }
       ]
@@ -3215,7 +3703,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 317,
+          "line": 318,
           "column": 14
         }
       ]
@@ -3227,7 +3715,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 989,
+          "line": 990,
           "column": 38
         }
       ]
@@ -3315,12 +3803,12 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 451,
+          "line": 452,
           "column": 14
         },
         {
           "file": "src/state/appState.js",
-          "line": 457,
+          "line": 458,
           "column": 14
         }
       ]
@@ -3334,6 +3822,18 @@
           "file": "src/layouts/MainLayout.vue",
           "line": 49,
           "column": 10
+        }
+      ]
+    },
+    "f712835e3ec775f8": {
+      "source": "30天",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 115,
+          "column": 12
         }
       ]
     },
@@ -3364,8 +3864,40 @@
         },
         {
           "file": "src/state/appState.js",
-          "line": 1048,
+          "line": 1049,
           "column": 12
+        }
+      ]
+    },
+    "fb04addb4c2654f5": {
+      "source": "输出",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 162,
+          "column": 14
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 392,
+          "column": 60
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 439,
+          "column": 60
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 482,
+          "column": 34
+        },
+        {
+          "file": "src/views/Usage.vue",
+          "line": 495,
+          "column": 75
         }
       ]
     },
@@ -3376,8 +3908,20 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 987,
+          "line": 988,
           "column": 40
+        }
+      ]
+    },
+    "fbe4336d91e5da43": {
+      "source": "7天",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Usage.vue",
+          "line": 114,
+          "column": 12
         }
       ]
     }

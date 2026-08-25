@@ -48,6 +48,7 @@ func LoadUsageSummary(path string) (Summary, error) {
 		InvalidTurnsTotal:  int(doc.Totals.InvalidTurnsTotal),
 		RequestTokensTotal: totals.RequestTokensTotal,
 		PromptTokensTotal:  totals.PromptTokensTotal,
+		OutputTokensTotal:  doc.Totals.OutputTokens,
 		CacheReadTokens:    totals.CacheReadTokens,
 		CacheWriteTokens:   totals.CacheWriteTokens,
 		CacheHitRate:       cacheHitRateFromTotals(totals),

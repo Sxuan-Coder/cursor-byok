@@ -9,6 +9,7 @@ import {
   StopProxy,
 } from "@bindings/cursor/internal/bridge/proxyservice.js";
 import { GetHomeMetricsSummary } from "@bindings/cursor/internal/bridge/metricsservice.js";
+import { GetPricing, GetUsageReport, SavePricing } from "@bindings/cursor/internal/bridge/usageservice.js";
 import {
   CheckForUpdates,
   GetAppVersion,
@@ -18,6 +19,7 @@ import {
   OpenFooterAuthorHome,
   OpenHistoryWindow,
   OpenModelConfigWindow,
+  OpenUsageReportWindow,
 } from "@bindings/cursor/internal/bridge/windowservice.js";
 import { Call } from "@wailsio/runtime";
 
@@ -139,6 +141,22 @@ export function openFooterAuthorHome() {
 
 export function openModelConfig() {
   return withApiLogging("OpenModelConfigWindow", undefined, () => OpenModelConfigWindow());
+}
+
+export function openUsageReport() {
+  return withApiLogging("OpenUsageReportWindow", undefined, () => OpenUsageReportWindow());
+}
+
+export function getUsageReport() {
+  return withApiLogging("GetUsageReport", undefined, () => GetUsageReport());
+}
+
+export function getUsagePricing() {
+  return withApiLogging("GetPricing", undefined, () => GetPricing());
+}
+
+export function saveUsagePricing(pricing) {
+  return withApiLogging("SavePricing", pricing, () => SavePricing(pricing));
 }
 
 export function testModelAdapter(adapter) {

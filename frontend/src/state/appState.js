@@ -14,6 +14,7 @@ import {
   loadUserConfig,
   openLogsDirectory,
   openModelConfig,
+  openUsageReport,
   saveUserConfig,
   startProxyService,
   stopProxyService,
@@ -1401,6 +1402,10 @@ export async function openConfigWindow() {
 
 export async function openModelConfigWindow() {
   await openModelConfig();
+}
+
+export async function openUsageReportWindow() {
+  await openUsageReport();
 }
 
 export async function checkForAppUpdates() {

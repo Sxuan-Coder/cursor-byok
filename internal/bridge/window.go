@@ -17,10 +17,11 @@ import (
 
 // WindowService 定义了当前模块中的 WindowService 类型。
 type WindowService struct {
-	app               *application.App
-	updater           *updater.Manager
-	modelConfigWindow *application.WebviewWindow
-	mu                sync.RWMutex
+	app                *application.App
+	updater            *updater.Manager
+	modelConfigWindow  *application.WebviewWindow
+	usageReportWindow  *application.WebviewWindow
+	mu                 sync.RWMutex
 }
 
 // NewWindowService 用于处理与 NewWindowService 相关的逻辑。
@@ -134,6 +135,67 @@ func (s *WindowService) OpenModelConfigWindow() {
 	})
 
 	s.modelConfigWindow = win
+}
+
+// OpenUsageReportWindow 打开用量报表独立窗口。如果窗口已存在则聚焦。
+func (s *WindowService) OpenUsageReportWindow() {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	if s.app == nil {
+		return
+	}
+
+	if s.usageReportWindow != nil {
+		s.usageReportWindow.Show()
+		s.usageReportWindow.Focus()
+		return
+	}
+
+	win := s.app.Window.NewWithOptions(application.WebviewWindowOptions{
+		Title:               "用量报表",
+		Width:               1080,
+		Height:              720,
+		MinWidth:           960,
+		MinHeight:          640,
+		DisableResize:       false,
+		Frameless:           goruntime.GOOS == "windows",
+		URL:                 "/#/usage",
+		Hidden:              false,
+		HideOnEscape:        false,
+		MinimiseButtonState: application.ButtonEnabled,
+		MaximiseButtonState: application.ButtonEnabled,
+		CloseButtonState:    application.ButtonEnabled,
+		BackgroundColour:    application.RGBA{Red: 25, Green: 25, Blue: 25, Alpha: 255},
+		Mac: application.MacWindow{
+			Backdrop:      application.MacBackdropLiquidGlass,
+			DisableShadow: false,
+			TitleBar: application.MacTitleBar{
+				AppearsTransparent:   true,
+				Hide:                 false,
+				HideTitle:            true,
+				FullSizeContent:      true,
+				UseToolbar:           false,
+				HideToolbarSeparator: true,
+			},
+			WebviewPreferences: application.MacWebviewPreferences{
+				FullscreenEnabled:                   u.True,
+				TextInteractionEnabled:             u.True,
+				AllowsBackForwardNavigationGestures: u.False,
+			},
+		},
+		Windows: application.WindowsWindow{
+			HiddenOnTaskbar: false,
+		},
+	})
+
+	win.RegisterHook(events.Common.WindowClosing, func(e *application.WindowEvent) {
+		s.mu.Lock()
+		defer s.mu.Unlock()
+		s.usageReportWindow = nil
+	})
+
+	s.usageReportWindow = win
 }
 
 // OpenHistoryWindow 用于处理与 OpenHistoryWindow 相关的逻辑。

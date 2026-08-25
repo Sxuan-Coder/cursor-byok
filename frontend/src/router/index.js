@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import Home from "@/views/Home.vue";
 import ModelConfig from "@/views/ModelConfig.vue";
+import Usage from "@/views/Usage.vue";
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -14,6 +15,11 @@ const router = createRouter({
       path: "/model-config",
       component: ModelConfig,
       meta: { showIcon: false, title: "模型配置", directlyClose: true },
+    },
+    {
+      path: "/usage",
+      component: Usage,
+      meta: { showIcon: false, title: "用量报表", directlyClose: true },
     },
   ],
 });

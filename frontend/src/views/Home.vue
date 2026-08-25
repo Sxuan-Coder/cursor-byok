@@ -9,6 +9,7 @@ import {
   appViewState,
   openConfigWindow,
   openModelConfigWindow,
+  openUsageReportWindow,
   syncHomeMetrics,
   syncServiceState,
   toUserError,
@@ -63,6 +64,14 @@ async function handleOpenModelConfig() {
     showActionError("打开失败", toUserError(error));
   }
 }
+
+async function handleOpenUsageReport() {
+  try {
+    await openUsageReportWindow();
+  } catch (error) {
+    showActionError("打开失败", toUserError(error));
+  }
+}
 </script>
 
 <template>
@@ -108,6 +117,7 @@ async function handleOpenModelConfig() {
         </div>
         <div class="center-row gap-2">
           <Button variant="default" @click="handleOpenConfig">设置文件夹</Button>
+          <Button variant="default" @click="handleOpenUsageReport">用量报表</Button>
           <Button variant="primary" @click="handleOpenModelConfig">模型配置</Button>
         </div>
       </div>
