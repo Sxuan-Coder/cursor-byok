@@ -25,6 +25,10 @@ import {
   normalizeReasoningEffort,
   SUPPORTED_REASONING_EFFORTS,
 } from "@/state/modelAdapterReasoning";
+import {
+  buildProviderGroupKey,
+  buildProviderGroupKeyFromCredentials,
+} from "@/state/providerGroups";
 
 const APP_STATE_STORAGE_KEY = "cursor-client:runtime-state:v2";
 const GENERIC_SERVICE_ERROR = "服务错误";
@@ -1311,6 +1315,157 @@ export async function duplicateModelAdapterAt(index) {
     {
       ...currentConfig,
       modelAdapters: nextAdapters,
+    },
+    { modelAdaptersOnly: true },
+  );
+}
+
+// 提供商派生分组需要从模板继承的高级字段（不含模型身份字段与备注）。
+const MODEL_ADAPTER_TEMPLATE_FIELDS = [
+  "reasoningEffort",
+  "openAIEndpoint",
+  "openAIExtraParamsEnabled",
+  "openAIExtraParamsJSON",
+  "anthropicExtraParamsEnabled",
+  "anthropicExtraParamsJSON",
+  "anthropicMaxTokens",
+  "anthropicThinkingEffort",
+  "thinkingBudgetTokens",
+  "contextWindowTokens",
+  "maxCompletionTokens",
+  "customHeadersEnabled",
+  "customHeadersJSON",
+];
+
+// createModelAdapterFromTemplate 以默认配置为底，继承模板的高级参数后应用覆盖值。
+export function createModelAdapterFromTemplate(template, overrides = {}) {
+  const draft = createEmptyModelAdapter();
+  if (template && typeof template === "object") {
+    const source = normalizeModelAdapter(template);
+    for (const field of MODEL_ADAPTER_TEMPLATE_FIELDS) {
+      draft[field] = source[field];
+    }
+  }
+  return normalizeModelAdapter({ ...draft, ...overrides });
+}
+
+// addModelAdapters 一次保存批量追加模型配置，自动跳过渠道身份重复的条目。
+export async function addModelAdapters(adapters) {
+  let currentConfig;
+  try {
+    currentConfig = await loadPersistedUserConfig();
+  } catch (error) {
+    return { ok: false, error: toUserError(error), added: 0 };
+  }
+  const nextAdapters = normalizeModelAdapters(currentConfig.modelAdapters);
+  const incoming = Array.isArray(adapters) ? adapters : [];
+  if (incoming.length === 0) {
+    return {
+      ok: false,
+      error: "没有可新增的模型",
+      added: 0,
+    };
+  }
+
+  const existingKeys = new Set(nextAdapters.map((adapter) => buildModelAdapterIdentityKey(adapter)));
+  const additions = [];
+  for (const item of incoming) {
+    const adapter = normalizeModelAdapter(item);
+    const identityKey = buildModelAdapterIdentityKey(adapter);
+    if (existingKeys.has(identityKey)) {
+      continue;
+    }
+    existingKeys.add(identityKey);
+    additions.push(adapter);
+  }
+  if (additions.length === 0) {
+    return {
+      ok: false,
+      error: "所选模型均已存在，没有可新增的条目",
+      added: 0,
+    };
+  }
+
+  const baseSort = nextAdapters.length;
+  const result = await persistConfigPayload(
+    {
+      ...currentConfig,
+      modelAdapters: [
+        ...nextAdapters,
+        ...additions.map((adapter, index) => ({ ...adapter, sort: baseSort + index + 1 })),
+      ],
+    },
+    { modelAdaptersOnly: true },
+  );
+  return {
+    ...result,
+    added: result.ok ? additions.length : 0,
+  };
+}
+
+// updateProviderCredentials 批量更新同一提供商下全部模型的接口地址与密钥。
+export async function updateProviderCredentials(oldBaseURL, oldAPIKey, { baseURL, apiKey } = {}) {
+  const nextBaseURL = asString(baseURL).trim();
+  const nextAPIKey = asString(apiKey).trim();
+  if (!nextBaseURL) {
+    return { ok: false, error: "接口地址不能为空", updated: 0 };
+  }
+  if (!nextAPIKey) {
+    return { ok: false, error: "访问密钥不能为空", updated: 0 };
+  }
+
+  let currentConfig;
+  try {
+    currentConfig = await loadPersistedUserConfig();
+  } catch (error) {
+    return { ok: false, error: toUserError(error), updated: 0 };
+  }
+  const nextAdapters = normalizeModelAdapters(currentConfig.modelAdapters);
+  const groupKey = buildProviderGroupKeyFromCredentials(oldBaseURL, oldAPIKey);
+  let updated = 0;
+  const patched = nextAdapters.map((adapter) => {
+    if (buildProviderGroupKey(adapter) !== groupKey) {
+      return adapter;
+    }
+    updated += 1;
+    return { ...adapter, baseURL: nextBaseURL, apiKey: nextAPIKey };
+  });
+  if (updated === 0) {
+    return { ok: false, error: "没有匹配的模型配置，请刷新后重试", updated: 0 };
+  }
+
+  const result = await persistConfigPayload(
+    {
+      ...currentConfig,
+      modelAdapters: patched,
+    },
+    { modelAdaptersOnly: true },
+  );
+  return {
+    ...result,
+    updated: result.ok ? updated : 0,
+  };
+}
+
+// deleteProviderAdapters 删除同一提供商下的全部模型配置。
+export async function deleteProviderAdapters(oldBaseURL, oldAPIKey) {
+  let currentConfig;
+  try {
+    currentConfig = await loadPersistedUserConfig();
+  } catch (error) {
+    return { ok: false, error: toUserError(error) };
+  }
+  const nextAdapters = normalizeModelAdapters(currentConfig.modelAdapters);
+  const groupKey = buildProviderGroupKeyFromCredentials(oldBaseURL, oldAPIKey);
+  const remaining = nextAdapters.filter((adapter) => buildProviderGroupKey(adapter) !== groupKey);
+  if (remaining.length === nextAdapters.length) {
+    return { ok: false, error: "没有匹配的模型配置，无法删除" };
+  }
+
+  return persistConfigPayload(
+    {
+      ...currentConfig,
+      modelAdapters: remaining,
     },
     { modelAdaptersOnly: true },
   );

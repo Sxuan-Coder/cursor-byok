@@ -1,25 +1,26 @@
 <script setup>
 import Button from "@/components/ui/Button.vue";
-import Card from "@/components/ui/Card.vue";
 import ContentModal from "@/components/ui/ContentModal.vue";
-import ModelAdapterTestCard from "@/components/ModelAdapterTestCard.vue";
 import ModelEditor from "@/components/ModelEditor.vue";
+import ModelPickerModal from "@/components/ModelPickerModal.vue";
+import ProviderEditorModal from "@/components/ProviderEditorModal.vue";
+import ProviderGroupSection from "@/components/ProviderGroupSection.vue";
 import { useMessage } from "@/composables/useMessage";
 import { useConfigTransfer } from "@/composables/useConfigTransfer";
-import Sortable from "sortablejs";
 import {
   appState,
   createEmptyModelAdapter,
   deleteModelAdapterAt,
+  deleteProviderAdapters,
   duplicateModelAdapterAt,
-  getModelAdapterTestResultByID,
   reloadUserConfig,
   runModelAdapterTest,
   saveModelAdapterOrder,
   startModelAdapterTest,
   toUserError,
 } from "@/state/appState";
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { buildProviderGroupKey, buildProviderGroups } from "@/state/providerGroups";
+import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 
 const BATCH_TEST_CONCURRENCY = 10;
 const message = useMessage();
@@ -39,20 +40,27 @@ const editorOpen = ref(false);
 const editorIndex = ref(-1);
 const editorAdapter = ref(null);
 const editorSession = ref(0);
-const modelGrid = ref(null);
 const sortSaving = ref(false);
+const pickerOpen = ref(false);
+const pickerSession = ref(0);
+const pickerProvider = ref(null);
+const pickerAdapters = ref([]);
+const providerEditorOpen = ref(false);
+const providerEditorSession = ref(0);
+const providerEditorMode = ref("create");
+const providerEditorProvider = ref(null);
 const batchActiveCalls = new Set();
 let batchStopRequested = false;
-let sortable = null;
 
 const filteredAdapters = computed(() => (
   activeType.value === "all"
     ? appState.modelAdapters
     : appState.modelAdapters.filter((adapter) => adapter.type === activeType.value)
 ));
-const filteredAdapterOrderKey = computed(() =>
-  filteredAdapters.value.map((adapter) => adapter.id).join("\n"),
-);
+const providerGroups = computed(() => buildProviderGroups(filteredAdapters.value));
+const groupActionsDisabled = computed(() => (
+  sortSaving.value || appState.configSaving || batchTesting.value
+));
 const batchButtonText = computed(() => {
   if (batchStopping.value) {
     return "停止中...";
@@ -63,6 +71,10 @@ const batchButtonText = computed(() => {
   return `停止测试 ${batchCompleted.value}/${batchTotal.value}`;
 });
 const editorTitle = computed(() => (editorIndex.value >= 0 ? "编辑模型配置" : "新增模型配置"));
+const pickerTitle = computed(() => `拉取模型 · ${formatHost(pickerProvider.value?.baseURL)}`);
+const providerEditorTitle = computed(() => (
+  providerEditorMode.value === "edit" ? "编辑提供商凭证" : "新增提供商"
+));
 const emptyStateText = computed(() => (
   activeType.value === "all"
     ? "当前还没有配置任何模型。"
@@ -94,17 +106,6 @@ const {
   handleImportConfig,
 } = useConfigTransfer({ message, showActionError });
 
-function maskSecret(value) {
-  const text = String(value || "").trim();
-  if (!text) {
-    return "-";
-  }
-  if (text.length <= 8) {
-    return `${"*".repeat(Math.max(text.length - 2, 0))}${text.slice(-2)}`;
-  }
-  return `${text.slice(0, 4)}****${text.slice(-4)}`;
-}
-
 function typeLabel(type) {
   return type === "anthropic" ? "Anthropic" : "OpenAI";
 }
@@ -122,14 +123,18 @@ function formatHost(value) {
   }
 }
 
-function openEditor(index = -1) {
+function openEditor(index = -1, draft = null) {
   editorIndex.value = index;
-  editorAdapter.value = index >= 0
-    ? appState.modelAdapters[index]
-    : {
-        ...createEmptyModelAdapter(),
-        type: activeType.value === "anthropic" ? "anthropic" : "openai",
-      };
+  if (index >= 0) {
+    editorAdapter.value = appState.modelAdapters[index];
+  } else if (draft) {
+    editorAdapter.value = { ...createEmptyModelAdapter(), ...draft };
+  } else {
+    editorAdapter.value = {
+      ...createEmptyModelAdapter(),
+      type: activeType.value === "anthropic" ? "anthropic" : "openai",
+    };
+  }
   editorSession.value += 1;
   editorOpen.value = true;
 }
@@ -147,40 +152,71 @@ function handleEditorSaved(adapter) {
   }
 }
 
-function destroySortable() {
-  if (!sortable) {
-    return;
-  }
-  sortable.destroy();
-  sortable = null;
+function openPicker({ baseURL, apiKey, type = "openai", providerAdapters = [] }) {
+  pickerProvider.value = { baseURL, apiKey, type };
+  pickerAdapters.value = providerAdapters;
+  pickerSession.value += 1;
+  pickerOpen.value = true;
 }
 
-function syncSortable() {
-  const element = modelGrid.value;
-  if (!element) {
-    destroySortable();
+function handlePickerAdded(added) {
+  message(`已新增 ${added} 个模型`);
+}
+
+function handlePickerManual({ type, baseURL, apiKey }) {
+  openEditor(-1, { type, baseURL, apiKey });
+}
+
+function openProviderEditor(mode, provider = null) {
+  providerEditorMode.value = mode;
+  providerEditorProvider.value = provider;
+  providerEditorSession.value += 1;
+  providerEditorOpen.value = true;
+}
+
+function closeProviderEditor() {
+  if (appState.configSaving) {
     return;
   }
-  if (!sortable || sortable.el !== element) {
-    destroySortable();
-    sortable = Sortable.create(element, {
-      animation: 160,
-      dataIdAttr: "data-model-id",
-      draggable: ".model-sort-item",
-      handle: ".model-sort-handle",
-      ghostClass: "opacity-40",
-      chosenClass: "!border-[#10AD5D]",
-      dragClass: "cursor-grabbing",
-      onEnd: (event) => {
-        void handleModelSort(event);
-      },
-    });
+  providerEditorOpen.value = false;
+}
+
+function handleProviderCreated({ type, baseURL, apiKey }) {
+  openPicker({ baseURL, apiKey, type, providerAdapters: [] });
+}
+
+function handleProviderSaved(updated) {
+  message(`已更新 ${updated} 个模型的凭证`);
+}
+
+function handleGroupFetchModels(group) {
+  const preferredType = activeType.value !== "all" && group.types.includes(activeType.value)
+    ? activeType.value
+    : group.types[0];
+  openPicker({
+    baseURL: group.baseURL,
+    apiKey: group.apiKey,
+    type: preferredType || "openai",
+    providerAdapters: group.adapters,
+  });
+}
+
+function handleGroupAddModel(group) {
+  const preferredType = activeType.value !== "all" && group.types.includes(activeType.value)
+    ? activeType.value
+    : group.types[0];
+  openEditor(-1, {
+    type: preferredType || "openai",
+    baseURL: group.baseURL,
+    apiKey: group.apiKey,
+  });
+}
+
+async function handleDeleteProvider(group) {
+  const result = await deleteProviderAdapters(group.baseURL, group.apiKey);
+  if (!result.ok) {
+    showActionError("删除提供商失败", result.error);
   }
-  sortable.option(
-    "disabled",
-    sortSaving.value || appState.configSaving || batchTesting.value,
-  );
-  sortable.sort(filteredAdapters.value.map((adapter) => adapter.id), false);
 }
 
 async function restoreModelOrder(previousAdapters) {
@@ -191,44 +227,25 @@ async function restoreModelOrder(previousAdapters) {
   }
 }
 
-async function handleModelSort(event) {
-  const oldIndex = event.oldDraggableIndex ?? event.oldIndex;
-  const newIndex = event.newDraggableIndex ?? event.newIndex;
-  if (
-    !Number.isInteger(oldIndex)
-    || !Number.isInteger(newIndex)
-    || oldIndex === newIndex
-  ) {
-    syncSortable();
-    return;
-  }
-
-  const reorderedTypeAdapters = filteredAdapters.value.slice();
-  const [movedAdapter] = reorderedTypeAdapters.splice(oldIndex, 1);
-  if (!movedAdapter || newIndex < 0 || newIndex > reorderedTypeAdapters.length) {
-    syncSortable();
-    return;
-  }
-  reorderedTypeAdapters.splice(newIndex, 0, movedAdapter);
-
+async function handleGroupReorder({ group, adapters: reorderedAdapters }) {
   const previousAdapters = appState.modelAdapters.slice();
-  let nextAdapters = reorderedTypeAdapters;
-  if (activeType.value !== "all") {
-    let typeIndex = 0;
-    nextAdapters = previousAdapters.map((adapter) => {
-      if (adapter.type !== activeType.value) {
+  let cursor = 0;
+  const nextAdapters = previousAdapters
+    .map((adapter) => {
+      if (buildProviderGroupKey(adapter) !== group.key) {
         return adapter;
       }
-      const nextAdapter = reorderedTypeAdapters[typeIndex];
-      typeIndex += 1;
+      const nextAdapter = reorderedAdapters[cursor];
+      cursor += 1;
       return nextAdapter;
-    });
-  }
-  nextAdapters = nextAdapters
+    })
     .map((adapter, index) => ({
       ...adapter,
       sort: index + 1,
     }));
+  if (cursor !== group.adapters.length) {
+    return;
+  }
 
   sortSaving.value = true;
   appState.modelAdapters = nextAdapters;
@@ -243,40 +260,24 @@ async function handleModelSort(event) {
     showActionError("排序失败", toUserError(error));
   } finally {
     sortSaving.value = false;
-    await nextTick();
-    syncSortable();
   }
 }
 
-watch(
-  () => [
-    modelGrid.value,
-    activeType.value,
-    filteredAdapterOrderKey.value,
-    appState.configSaving,
-    batchTesting.value,
-  ],
-  () => {
-    void nextTick().then(syncSortable);
-  },
-  { flush: "post" },
-);
-
-async function handleDeleteModelAdapter(index) {
-  const target = appState.modelAdapters[index];
-  if (!target) {
-    showActionError("删除失败", "模型配置不存在，无法删除");
-    return;
-  }
-  const result = await deleteModelAdapterAt(index);
-  if (!result.ok) {
-    showActionError("删除失败", result.error);
+async function handleTestModelAdapter(adapter) {
+  try {
+    await runModelAdapterTest(adapter);
+  } catch (_error) {
+    // 失败结果会通过事件同步到界面，这里不再额外弹窗打断用户。
   }
 }
 
-async function handleDuplicateModelAdapter(index) {
-  const target = appState.modelAdapters[index];
-  if (!target) {
+async function handleEditModelAdapter(adapter) {
+  openEditor(appState.modelAdapters.indexOf(adapter));
+}
+
+async function handleDuplicateModelAdapter(adapter) {
+  const index = appState.modelAdapters.indexOf(adapter);
+  if (index < 0) {
     showActionError("复制失败", "模型配置不存在，无法复制");
     return;
   }
@@ -286,19 +287,15 @@ async function handleDuplicateModelAdapter(index) {
   }
 }
 
-function getAdapterTestResult(adapter) {
-  return getModelAdapterTestResultByID(adapter?.id);
-}
-
-function isAdapterTesting(adapter) {
-  return getAdapterTestResult(adapter)?.status === "running";
-}
-
-async function handleTestModelAdapter(adapter) {
-  try {
-    await runModelAdapterTest(adapter);
-  } catch (_error) {
-    // 失败结果会通过事件同步到界面，这里不再额外弹窗打断用户。
+async function handleDeleteModelAdapter(adapter) {
+  const index = appState.modelAdapters.indexOf(adapter);
+  if (index < 0) {
+    showActionError("删除失败", "模型配置不存在，无法删除");
+    return;
+  }
+  const result = await deleteModelAdapterAt(index);
+  if (!result.ok) {
+    showActionError("删除失败", result.error);
   }
 }
 
@@ -367,18 +364,15 @@ async function handleTestAllModelAdapters() {
 
 onMounted(async () => {
   await reloadUserConfig({ modelAdaptersOnly: true }).catch(() => { });
-  await nextTick();
-  syncSortable();
 });
 
 onBeforeUnmount(() => {
   void stopBatchTesting();
-  destroySortable();
 });
 </script>
 
 <template>
-  <div class="flex h-full min-h-0 flex-col  pt-0 text-[#e5e5e5] overflow-hidden">
+  <div class="flex h-full min-h-0 flex-col pt-0 text-[#e5e5e5] overflow-hidden">
     <div class="shrink-0 pb-4">
       <div class="flex items-center justify-between gap-4 px-4">
         <div class="center-row gap-2">
@@ -418,77 +412,45 @@ onBeforeUnmount(() => {
           >
             {{ batchButtonText }}
           </Button>
-          <Button variant="primary" :disabled="sortSaving || appState.configSaving || batchTesting || configTransferBusy" @click="openEditor()">新增模型</Button>
+          <Button variant="primary" :disabled="sortSaving || appState.configSaving || batchTesting || configTransferBusy" @click="openProviderEditor('create')">
+            新增提供商
+          </Button>
         </div>
       </div>
     </div>
 
-    <div class="min-h-0 flex-1 ">
+    <div class="min-h-0 flex-1">
       <div v-if="filteredAdapters.length === 0"
-        class="flex h-full min-h-[220px] items-center justify-center rounded-[8px]  px-4 text-sm text-[#a3a3a3]">
-        {{ emptyStateText }}
+        class="flex h-full min-h-[220px] flex-col items-center justify-center gap-3 rounded-[8px] px-4 text-sm text-[#a3a3a3]">
+        <span>{{ emptyStateText }}</span>
+        <div class="center-row gap-2">
+          <Button variant="primary" :disabled="sortSaving || appState.configSaving || configTransferBusy" @click="openProviderEditor('create')">
+            <span class="center-row gap-1.5">
+              <span class="icon-[mdi--server-plus] text-[16px]"></span>
+              <span>新增提供商</span>
+            </span>
+          </Button>
+          <Button variant="default" :disabled="sortSaving || appState.configSaving || configTransferBusy" @click="openEditor()">手动新增模型</Button>
+        </div>
       </div>
 
-      <div v-else class="h-full min-h-0 overflow-y-auto  scroll-shadow-bottom p-4 pt-0">
-        <div
-          ref="modelGrid"
-          class="grid gap-3 pb-1 [grid-template-columns:repeat(auto-fill,minmax(250px,1fr))]"
-        >
-          <Card
-            v-for="(adapter, index) in filteredAdapters"
-            :key="adapter.id || `${adapter.baseURL}-${adapter.modelID}-${index}`"
-            class="model-sort-item group relative pb-2"
-            :data-model-id="adapter.id"
-          >
-            <button
-              type="button"
-              class="model-sort-handle w-[30px] h-[30px]  center-row justify-center absolute left-2 top-2 z-10  shrink-0 touch-none cursor-grab rounded-[6px] border border-transparent bg-transparent text-transparent opacity-0 outline-none transition-[opacity,color,border-color,background-color] focus-visible:border-[#10AD5D] focus-visible:bg-[#333333] focus-visible:text-white focus-visible:opacity-100 active:cursor-grabbing group-hover:border-[#454545] group-hover:bg-[#333333] group-hover:text-white group-hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-30"
-              :disabled="sortSaving || appState.configSaving || batchTesting"
-              aria-label="拖拽排序"
-              title="拖拽排序"
-              @click.stop
-            >
-              <span class="icon-[icon-park-outline--drag] text-[20px]"></span>
-            </button>
-            <div class="flex  h-[150px] flex-col justify-between gap-3">
-              <div class="flex flex-col gap-2.5">
-                <div class="flex items-start justify-between gap-3">
-                  <div class="min-w-0 flex-1 ">
-                    <div class="truncate text-base font-medium text-white">{{ adapter.displayName }}</div>
-                    <div class="mt-1 truncate text-sm text-[#8f8f8f]">{{ adapter.modelID }}</div>
-                  </div>
-                  <span
-                    class="center-row shrink-0 gap-1 rounded-[999px] border border-[#3f3f3f] px-[7px] py-[4px] text-[11px] font-medium text-[#cfcfcf]"
-                  >
-                    <span class="icon-[bxl--openai] text-[14px] !text-white" v-if="adapter.type === 'openai'"></span>
-                    <span class="icon-[logos--claude-icon] text-[14px]" v-else></span>
-                    <span>{{ typeLabel(adapter.type) }}</span>
-                  </span>
-                </div>
-
-                <ModelAdapterTestCard
-                  compact
-                  title="测试"
-                  empty-text="未测试"
-                  :result="getAdapterTestResult(adapter)"
-                />
-              </div>
-
-              <div class="center-row flex-wrap justify-end gap-2 pt-0">
-                <Button
-                  variant="default"
-                  :disabled="sortSaving || appState.configSaving || batchTesting || isAdapterTesting(adapter)"
-                  @click="handleTestModelAdapter(adapter)"
-                >
-                  {{ isAdapterTesting(adapter) ? "测试中..." : "测试" }}
-                </Button>
-                <Button variant="default" :disabled="sortSaving || appState.configSaving" @click="openEditor(appState.modelAdapters.indexOf(adapter))">编辑</Button>
-                <Button variant="default" :disabled="sortSaving || appState.configSaving" @click="handleDuplicateModelAdapter(appState.modelAdapters.indexOf(adapter))">复制</Button>
-                <Button variant="text" :disabled="sortSaving || appState.configSaving"
-                  @click="handleDeleteModelAdapter(appState.modelAdapters.indexOf(adapter))">删除</Button>
-              </div>
-            </div>
-          </Card>
+      <div v-else class="h-full min-h-0 overflow-y-auto scroll-shadow-bottom p-4 pt-0">
+        <div class="flex flex-col gap-4 pb-1">
+          <ProviderGroupSection
+            v-for="group in providerGroups"
+            :key="group.key"
+            :group="group"
+            :actions-disabled="groupActionsDisabled"
+            @fetch-models="handleGroupFetchModels"
+            @add-model="handleGroupAddModel"
+            @edit-provider="openProviderEditor('edit', { baseURL: $event.baseURL, apiKey: $event.apiKey })"
+            @delete-provider="handleDeleteProvider"
+            @test="handleTestModelAdapter"
+            @edit="handleEditModelAdapter"
+            @duplicate="handleDuplicateModelAdapter"
+            @delete="handleDeleteModelAdapter"
+            @reorder="handleGroupReorder"
+          />
         </div>
       </div>
     </div>
@@ -508,6 +470,44 @@ onBeforeUnmount(() => {
       :adapter="editorAdapter"
       @saved="handleEditorSaved"
       @close="closeEditor"
+    />
+  </ContentModal>
+
+  <ContentModal
+    :open="pickerOpen"
+    :title="pickerTitle"
+    size="xl"
+    :close-disabled="appState.configSaving"
+    @close="pickerOpen = false"
+  >
+    <ModelPickerModal
+      v-if="pickerOpen && pickerProvider"
+      :key="pickerSession"
+      :baseURL="pickerProvider.baseURL"
+      :apiKey="pickerProvider.apiKey"
+      :initialType="pickerProvider.type"
+      :providerAdapters="pickerAdapters"
+      @added="handlePickerAdded"
+      @manual="handlePickerManual"
+      @close="pickerOpen = false"
+    />
+  </ContentModal>
+
+  <ContentModal
+    :open="providerEditorOpen"
+    :title="providerEditorTitle"
+    size="md"
+    :close-disabled="appState.configSaving"
+    @close="closeProviderEditor"
+  >
+    <ProviderEditorModal
+      v-if="providerEditorOpen"
+      :key="providerEditorSession"
+      :mode="providerEditorMode"
+      :provider="providerEditorProvider"
+      @created="handleProviderCreated"
+      @saved="handleProviderSaved"
+      @close="closeProviderEditor"
     />
   </ContentModal>
 </template>
