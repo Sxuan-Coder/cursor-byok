@@ -1,6 +1,10 @@
 package config
 
-import "testing"
+import (
+	"testing"
+
+	"gopkg.in/yaml.v3"
+)
 
 func testModelAdapter(displayName string, sortValue int) ModelAdapterConfig {
 	return ModelAdapterConfig{
@@ -78,5 +82,45 @@ func TestNormalizeModelAdapterConfigsRejectsUnknownReasoningEffort(t *testing.T)
 
 	if _, err := NormalizeModelAdapterConfigs([]ModelAdapterConfig{adapter}); err == nil {
 		t.Fatal("NormalizeModelAdapterConfigs should reject an unknown reasoning effort")
+	}
+}
+
+func TestNormalizeConfigPreservesCommitSettings(t *testing.T) {
+	normalized, err := NormalizeConfig(Config{
+		CommitModelHash: "  abc123  ",
+		CommitPrompt:    "  自定义提交提示词  ",
+	})
+	if err != nil {
+		t.Fatalf("NormalizeConfig returned error: %v", err)
+	}
+	if normalized.CommitModelHash != "abc123" {
+		t.Fatalf("CommitModelHash = %q, want %q", normalized.CommitModelHash, "abc123")
+	}
+	if normalized.CommitPrompt != "自定义提交提示词" {
+		t.Fatalf("CommitPrompt = %q, want %q", normalized.CommitPrompt, "自定义提交提示词")
+	}
+}
+
+func TestNormalizeConfigKeepsCommitSettingsEmptyByDefault(t *testing.T) {
+	normalized, err := NormalizeConfig(Config{})
+	if err != nil {
+		t.Fatalf("NormalizeConfig returned error: %v", err)
+	}
+	if normalized.CommitModelHash != "" || normalized.CommitPrompt != "" {
+		t.Fatalf("commit settings should default to empty, got hash=%q prompt=%q", normalized.CommitModelHash, normalized.CommitPrompt)
+	}
+}
+
+func TestConfigYAMLRoundTripKeepsCommitSettings(t *testing.T) {
+	marshaled, err := yaml.Marshal(Config{CommitModelHash: "hash-1", CommitPrompt: "提示词"})
+	if err != nil {
+		t.Fatalf("yaml.Marshal returned error: %v", err)
+	}
+	var loaded Config
+	if err := yaml.Unmarshal(marshaled, &loaded); err != nil {
+		t.Fatalf("yaml.Unmarshal returned error: %v", err)
+	}
+	if loaded.CommitModelHash != "hash-1" || loaded.CommitPrompt != "提示词" {
+		t.Fatalf("round trip lost commit settings, got hash=%q prompt=%q", loaded.CommitModelHash, loaded.CommitPrompt)
 	}
 }

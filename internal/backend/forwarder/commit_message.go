@@ -51,12 +51,15 @@ func (service *Service) WriteGitCommitMessage(ctx context.Context, req *connect.
 	if service.provider == nil {
 		return nil, commitMessageConnectError(recorder, connect.CodeInternal, fmt.Errorf("provider gateway is not initialized"))
 	}
-	messages, err := buildCommitMessagePrompt(req.Msg, diffs)
+	messages, err := buildCommitMessagePrompt(req.Msg, diffs, service.commitPromptOverride())
 	if err != nil {
 		return nil, commitMessageConnectError(recorder, connect.CodeInternal, err)
 	}
 	modelCallID := requestID + "-model"
-	modelID, modelSource, lastAgentModelHash := service.resolveCommitMessageModelID(ctx)
+	modelID, modelSource, lastAgentModelHash, err := service.resolveCommitMessageModelID(ctx)
+	if err != nil {
+		return nil, commitMessageConnectError(recorder, connect.CodeInvalidArgument, err)
+	}
 	accumulated := ""
 	artifactPaths := &modeladapter.LLMArtifactPaths{}
 	err = service.provider.StartStream(ctx, ProviderRequest{
@@ -117,10 +120,14 @@ func (service *Service) WriteGitCommitMessage(ctx context.Context, req *connect.
 	}), nil
 }
 
-func buildCommitMessagePrompt(req *aiserverv1.WriteGitCommitMessageRequest, diffs []string) ([]modeladapter.Message, error) {
-	system, err := promptassets.ReadCommitPrompt()
-	if err != nil {
-		return nil, err
+func buildCommitMessagePrompt(req *aiserverv1.WriteGitCommitMessageRequest, diffs []string, systemPromptOverride string) ([]modeladapter.Message, error) {
+	system := strings.TrimSpace(systemPromptOverride)
+	if system == "" {
+		embedded, err := promptassets.ReadCommitPrompt()
+		if err != nil {
+			return nil, err
+		}
+		system = embedded
 	}
 	if strings.TrimSpace(system) == "" {
 		return nil, fmt.Errorf("commit prompt asset is empty")
@@ -153,22 +160,49 @@ func (service *Service) commitMessageHistoryRoot() string {
 	return strings.TrimSpace(service.store.HistoryDir())
 }
 
-func (service *Service) resolveCommitMessageModelID(ctx context.Context) (string, string, string) {
-	if service == nil || service.modelMemory == nil || service.resolver == nil {
-		return "", "default_fallback", ""
+func (service *Service) resolveCommitMessageModelID(ctx context.Context) (string, string, string, error) {
+	if service == nil || service.resolver == nil {
+		return "", "default_fallback", "", nil
+	}
+	if configured := service.commitModelHash(); configured != "" {
+		channel, err := service.resolver.SelectChannelForModel(ctx, configured)
+		if err != nil {
+			return "", "commit_model_hash", configured, fmt.Errorf("commit model %q is not available: %w", configured, err)
+		}
+		if channel == nil || channel.ID != configured {
+			return "", "commit_model_hash", configured, fmt.Errorf("commit model %q is not configured; select a configured model in the commit settings", configured)
+		}
+		return configured, "commit_model_hash", configured, nil
+	}
+	if service.modelMemory == nil {
+		return "", "default_fallback", "", nil
 	}
 	hash := strings.TrimSpace(service.modelMemory.LastAgentModelHash())
 	if hash == "" {
-		return "", "default_fallback", ""
+		return "", "default_fallback", "", nil
 	}
 	channel, err := service.resolver.SelectChannelForModel(ctx, hash)
 	if err != nil || channel == nil || strings.TrimSpace(channel.ID) != hash {
 		if err != nil {
 			log.Printf("forwarder commit message ignored invalid last agent model hash=%s error=%v", hash, err)
 		}
-		return "", "default_fallback", hash
+		return "", "default_fallback", hash, nil
 	}
-	return hash, "last_agent_model_hash", hash
+	return hash, "last_agent_model_hash", hash, nil
+}
+
+func (service *Service) commitModelHash() string {
+	if service == nil || service.commitConfig == nil {
+		return ""
+	}
+	return strings.TrimSpace(service.commitConfig.CommitModelHash())
+}
+
+func (service *Service) commitPromptOverride() string {
+	if service == nil || service.commitConfig == nil {
+		return ""
+	}
+	return strings.TrimSpace(service.commitConfig.CommitPrompt())
 }
 
 func recordCommitMessageIncomingRequest(recorder *commitMessageLogRecorder, requestID string, request *aiserverv1.WriteGitCommitMessageRequest) error {

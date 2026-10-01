@@ -56,6 +56,8 @@ type Config struct {
 	ModelAdapters             []ModelAdapterConfig `json:"modelAdapters" yaml:"modelAdapters"`
 	HomeMetrics               HomeMetricsConfig    `json:"homeMetrics" yaml:"homeMetrics"`
 	LastAgentModelHash        string               `json:"lastAgentModelHash" yaml:"lastAgentModelHash"`
+	CommitModelHash           string               `json:"commitModelHash" yaml:"commitModelHash"`
+	CommitPrompt              string               `json:"commitPrompt" yaml:"commitPrompt"`
 }
 
 func DefaultConfig() Config {
@@ -84,6 +86,8 @@ func NormalizeConfig(input Config) (Config, error) {
 	output.ProxyListenAddr = proxyListenAddr
 	output.HomeMetrics.IncludeCacheWriteInHitRate = input.HomeMetrics.IncludeCacheWriteInHitRate
 	output.LastAgentModelHash = strings.TrimSpace(input.LastAgentModelHash)
+	output.CommitModelHash = strings.TrimSpace(input.CommitModelHash)
+	output.CommitPrompt = strings.TrimSpace(input.CommitPrompt)
 	adapters, err := NormalizeModelAdapterConfigs(input.ModelAdapters)
 	if err != nil {
 		return Config{}, err

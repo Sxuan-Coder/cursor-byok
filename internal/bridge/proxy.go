@@ -95,6 +95,11 @@ func (s *ProxyService) LoadUserConfig() (UserConfig, error) {
 	return s.core.LoadUserConfig()
 }
 
+// GetCommitPromptDefault 返回内置默认提交信息提示词。
+func (s *ProxyService) GetCommitPromptDefault() string {
+	return s.core.GetCommitPromptDefault()
+}
+
 // SaveUserConfig 用于处理与 SaveUserConfig 相关的逻辑。
 func (s *ProxyService) SaveUserConfig(cfg UserConfig) error {
 	return s.core.SaveUserConfig(cfg)
