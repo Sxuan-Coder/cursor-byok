@@ -183,3 +183,9 @@ export function fetchModelAdapterModels(payload) {
     Call.ByName(`${PROXY_SERVICE_NAME}.FetchModelAdapterModels`, payload),
   );
 }
+
+export function getCommitPromptDefault() {
+  return withApiLogging("GetCommitPromptDefault", undefined, () =>
+    Call.ByName(`${PROXY_SERVICE_NAME}.GetCommitPromptDefault`),
+  );
+}
