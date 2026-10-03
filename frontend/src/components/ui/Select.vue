@@ -307,11 +307,11 @@ onBeforeUnmount(() => {
       <div
         v-if="isOpen"
         ref="menuRef"
-        class="fixed z-[999] overflow-hidden rounded-[8px] border border-[#3f3f3f] bg-[#232323] p-1 shadow-[0_16px_30px_-12px_rgba(0,0,0,0.7)]"
+        class="fixed z-[999] flex flex-col overflow-hidden rounded-[8px] border border-[#3f3f3f] bg-[#232323] p-1 shadow-[0_16px_30px_-12px_rgba(0,0,0,0.7)]"
         :class="menuClass"
         :style="menuStyle"
       >
-        <ul role="listbox" class="overflow-y-auto py-1">
+        <ul role="listbox" class="min-h-0 flex-1 overflow-y-auto py-1">
           <li v-for="(option, index) in normalizedOptions" :key="option.value">
             <button
               :ref="(el) => setOptionRef(el, index)"
