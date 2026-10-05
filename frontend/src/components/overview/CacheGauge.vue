@@ -13,6 +13,12 @@ const GEOMETRY = {
   stroke: 11,
 };
 
+// 弧线本体按 132×78 绘制，容器再加高到 132×90，把百分比读数放到弧线下方，
+// 避免数字贴住弧线内缘。
+const VIEWBOX_WIDTH = 132;
+const ARC_HEIGHT = 78;
+const CONTAINER_HEIGHT = 90;
+
 const normalizedRate = computed(() => {
   const value = Number(props.rate);
   if (!Number.isFinite(value)) {
@@ -28,6 +34,11 @@ const percentage = computed(() =>
 const label = computed(() =>
   normalizedRate.value === null ? "--" : `${percentage.value.toFixed(2)}%`,
 );
+
+const containerHeight = computed(
+  () => (props.size * CONTAINER_HEIGHT) / VIEWBOX_WIDTH,
+);
+const arcHeight = computed(() => (props.size * ARC_HEIGHT) / VIEWBOX_WIDTH);
 
 function polarPoint(ratio) {
   const { cx, cy, radius } = GEOMETRY;
@@ -75,7 +86,7 @@ const needle = computed(() => {
 <template>
   <div
     class="relative shrink-0"
-    :style="{ width: `${size}px`, height: `${(size * 78) / 132}px` }"
+    :style="{ width: `${size}px`, height: `${containerHeight}px` }"
     role="img"
     :aria-label="`缓存命中率 ${label}`"
   >
@@ -83,7 +94,8 @@ const needle = computed(() => {
       viewBox="0 0 132 78"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      class="h-full w-full"
+      class="w-full"
+      :style="{ height: `${arcHeight}px` }"
     >
       <path
         :d="trackPath"
@@ -111,11 +123,10 @@ const needle = computed(() => {
       />
     </svg>
     <div
-      class="pointer-events-none absolute inset-x-0 flex justify-center"
-      style="top: 62%"
+      class="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center"
     >
       <span
-        class="font-num text-[21px] leading-none font-medium text-[#f2f2f2]"
+        class="font-num text-[20px] leading-none font-medium text-[#f2f2f2]"
       >
         {{ label }}
       </span>
