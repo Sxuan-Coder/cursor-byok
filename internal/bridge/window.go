@@ -3,6 +3,7 @@ package bridge
 import (
 	"cursor/internal/buildinfo"
 	"cursor/internal/client"
+	cursorapp "cursor/internal/cursor"
 	"cursor/internal/updater"
 	"fmt"
 	"os"
@@ -202,6 +203,11 @@ func (s *WindowService) OpenUsageReportWindow() {
 func (s *WindowService) OpenHistoryWindow() {
 	_ = os.MkdirAll(client.ResolveLogsRootPath(), 0o755)
 	openDirectory(client.ResolveLogsRootPath())
+}
+
+// LaunchCursor 启动本机 Cursor 客户端。
+func (s *WindowService) LaunchCursor() error {
+	return cursorapp.Launch()
 }
 
 // openDirectory 用于处理与 openDirectory 相关的逻辑。

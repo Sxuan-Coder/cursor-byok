@@ -1,0 +1,97 @@
+/*
+ * 设计令牌：Cursor 助手 V2 概览界面
+ * 深色基底 + 品牌绿（#10AD5D）点缀，参考设计稿 1:1 还原。
+ */
+:root {
+  /* 背景层级 */
+  --bg-app: #121212;
+  --bg-shell: #161616;
+  --bg-titlebar: #131313;
+  --bg-sidebar: #161616;
+  --bg-content: #131313;
+  --bg-card: #1b1b1b;
+  --bg-card-soft: #191919;
+  --bg-elevated: #202020;
+  --bg-inset: #151515;
+  --bg-hover: #232323;
+  --bg-active: #1f1f1f;
+
+  /* 品牌绿 */
+  --brand: #10ad5d;
+  --brand-hover: #149c58;
+  --brand-strong: #0f8a4c;
+  --brand-soft: rgba(16, 173, 93, 0.14);
+  --brand-soft-strong: rgba(16, 173, 93, 0.22);
+  --brand-border: rgba(16, 173, 93, 0.32);
+  --brand-glow: rgba(16, 173, 93, 0.28);
+
+  /* 边框 */
+  --border-subtle: #232323;
+  --border: #262626;
+  --border-strong: #303030;
+  --border-rail: #212121;
+
+  /* 文本 */
+  --text-primary: #f2f2f2;
+  --text-secondary: #a4a4a4;
+  --text-muted: #777777;
+  --text-faint: #5c5c5c;
+
+  /* 语义色 */
+  --danger: #ef5350;
+  --danger-soft: rgba(239, 83, 80, 0.14);
+  --warn: #e0a44a;
+  --info: #5b9bff;
+
+  /* 圆角 */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+
+  /* 尺寸（按设计稿 1024×683 量取） */
+  --titlebar-h: 32px;
+  --topbar-h: 46px;
+  --sidebar-w: 172px;
+  --rail-w: 268px;
+
+  /* 阴影 */
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.02) inset;
+  --shadow-pop: 0 24px 64px rgba(0, 0, 0, 0.6);
+}
+
+/* 品牌绿文字渐变 */
+.text-brand {
+  color: var(--brand);
+}
+
+/* 通用滚动容器下缘淡出，提示可继续滚动 */
+.scroll-fade {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0,
+    black calc(100% - 20px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    black 0,
+    black calc(100% - 20px),
+    transparent 100%
+  );
+}
+
+/* 保留 native 拖拽区域语义 */
+.drag-region {
+  --wails-draggable: drag;
+}
+
+.no-drag-region {
+  --wails-draggable: no-drag;
+}
+
+/* 数字使用等宽字形 */
+.font-num {
+  font-family: var(--font-num);
+}

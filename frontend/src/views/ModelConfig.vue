@@ -21,9 +21,12 @@ import {
 } from "@/state/appState";
 import { buildProviderGroupKey, buildProviderGroups } from "@/state/providerGroups";
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 const BATCH_TEST_CONCURRENCY = 10;
 const message = useMessage();
+const route = useRoute();
+const router = useRouter();
 
 const typeTabs = [
   { label: "全部", value: "all", icon: "icon-[mdi--view-grid-outline]" },
@@ -362,8 +365,30 @@ async function handleTestAllModelAdapters() {
   }
 }
 
+// 概览页的快捷操作通过 query 参数跳转到本页，这里消费一次后立即清理，避免刷新时重复触发。
+function consumeQueryActions() {
+  const wantsNew = route.query.new === "1";
+  const wantsTestAll = route.query.test === "all";
+  if (!wantsNew && !wantsTestAll) {
+    return;
+  }
+  if (wantsNew) {
+    openProviderEditor("create");
+  }
+  if (wantsTestAll) {
+    void handleTestAllModelAdapters();
+  }
+  router.replace({ path: route.path });
+}
+
+watch(
+  () => route.query,
+  () => consumeQueryActions(),
+);
+
 onMounted(async () => {
   await reloadUserConfig({ modelAdaptersOnly: true }).catch(() => { });
+  consumeQueryActions();
 });
 
 onBeforeUnmount(() => {
@@ -372,7 +397,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="flex h-full min-h-0 flex-col pt-0 text-[#e5e5e5] overflow-hidden">
+  <div class="flex h-full min-h-0 flex-col overflow-hidden pt-4 text-[var(--text-primary)]">
     <div class="shrink-0 pb-4">
       <div class="flex items-center justify-between gap-4 px-4">
         <div class="center-row gap-2">
@@ -382,8 +407,8 @@ onBeforeUnmount(() => {
             type="button"
             class="center-row gap-2 rounded-[8px] border px-3 py-2 text-sm transition-colors duration-150"
             :class="activeType === tab.value
-              ? 'border-[#1ca35a] bg-[#123322] text-white'
-              : 'border-[#343434] bg-[#252525] text-[#a3a3a3] hover:border-[#4a4a4a] hover:text-[#e5e5e5]'"
+              ? 'border-[var(--brand-border)] bg-[var(--brand-soft-strong)] text-[var(--brand)]'
+              : 'border-[var(--border)] bg-[var(--bg-card-soft)] text-[var(--text-secondary)] hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]'"
             @click="activeType = tab.value"
           >
             <span :class="[tab.icon, 'text-[16px]']"></span>

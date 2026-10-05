@@ -331,12 +331,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex h-full min-h-0 flex-col gap-4 overflow-y-auto p-4 pt-0 text-[#e5e5e5]">
+  <div class="flex h-full min-h-0 flex-col gap-4 overflow-y-auto px-4 pb-4 pt-4 text-[var(--text-primary)]">
     <Card class="!p-4">
       <div class="flex items-center justify-between gap-3">
         <div>
-          <div class="text-base font-medium">用量成本报表</div>
-          <div class="text-sm text-[#a3a3a3]">按请求、模型与天维度统计 Token 用量与估算成本</div>
+          <div class="text-[13.5px] font-medium">用量成本报表</div>
+          <div class="mt-1 text-[12px] text-[var(--text-secondary)]">按请求、模型与天维度统计 Token 用量与估算成本</div>
         </div>
         <div class="flex items-center gap-2">
           <Button variant="default" :disabled="loading" @click="openPricingEditor">单价设置</Button>

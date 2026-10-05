@@ -1,81 +1,27 @@
 <script setup>
 import Button from "@/components/ui/Button.vue";
 import Card from "@/components/ui/Card.vue";
-import { useMessage } from "@/composables/useMessage";
+import { useCursorAccount } from "@/composables/useCursorAccount";
 import { showModal } from "@/composables/useModal";
-import {
-  disconnectCursorAccount,
-  getCursorAccountStatus,
-  startCursorAccountLogin,
-} from "@/services/clientApi";
-import { toUserError } from "@/state/appState";
-import { computed, onMounted, onUnmounted, ref } from "vue";
+import { useMessage } from "@/composables/useMessage";
 
 const message = useMessage();
 
-const cursorAccountStatus = ref({
-  state: "signed_out",
-  authId: "",
-  email: "",
-  error: "",
-});
-const cursorAccountBusy = ref(false);
-let cursorAccountTimer = null;
-
-function maskCursorAccountIdentifier(value) {
-  const identifier = String(value || "").trim();
-  if (!identifier) return "";
-
-  const atIndex = identifier.indexOf("@");
-  if (atIndex > 0 && atIndex < identifier.length - 1) {
-    const localPart = identifier.slice(0, atIndex);
-    const domain = identifier.slice(atIndex + 1);
-    const maskedLocalPart = localPart.length <= 2
-      ? `${localPart[0]}***`
-      : `${localPart[0]}***${localPart.at(-1)}`;
-    return `${maskedLocalPart}@${domain}`;
-  }
-
-  if (identifier.length <= 8) return "****";
-  return `${identifier.slice(0, 4)}****${identifier.slice(-4)}`;
-}
-
-const cursorAccountSignedIn = computed(
-  () => cursorAccountStatus.value.state === "signed_in",
-);
-const cursorAccountWaiting = computed(
-  () => cursorAccountStatus.value.state === "waiting",
-);
-const cursorAccountDisplayIdentifier = computed(() => {
-  if (!cursorAccountSignedIn.value) return "";
-  return maskCursorAccountIdentifier(
-    cursorAccountStatus.value.email || cursorAccountStatus.value.authId,
-  );
-});
-const cursorAccountStateText = computed(() => {
-  if (cursorAccountSignedIn.value) return "已经登录";
-  if (cursorAccountWaiting.value) return "等待浏览器登录";
-  return "未连接";
-});
-
-function showActionError(title, error) {
-  const detail = String(error || "服务错误").trim() || "服务错误";
-  message(`${title}：${detail}`);
-}
-
-async function refreshCursorAccountStatus() {
-  cursorAccountStatus.value = await getCursorAccountStatus();
-}
+const {
+  status,
+  busy,
+  signedIn,
+  waiting,
+  maskedIdentifier,
+  stateText,
+  login,
+  disconnect,
+} = useCursorAccount();
 
 async function handleCursorAccountLogin() {
-  cursorAccountBusy.value = true;
-  try {
-    cursorAccountStatus.value = await startCursorAccountLogin();
-  } catch (error) {
-    showActionError("登录失败", toUserError(error));
-    await refreshCursorAccountStatus().catch(() => {});
-  } finally {
-    cursorAccountBusy.value = false;
+  const result = await login();
+  if (!result.ok) {
+    message(`登录失败：${result.error}`);
   }
 }
 
@@ -87,33 +33,15 @@ async function handleCursorAccountDisconnect() {
     cancelText: "取消",
     showCancel: true,
   });
-  if (!confirmed) return;
+  if (!confirmed) {
+    return;
+  }
 
-  cursorAccountBusy.value = true;
-  try {
-    cursorAccountStatus.value = await disconnectCursorAccount();
-  } catch (error) {
-    showActionError("退出登录失败", toUserError(error));
-  } finally {
-    cursorAccountBusy.value = false;
+  const result = await disconnect();
+  if (!result.ok) {
+    message(`退出登录失败：${result.error}`);
   }
 }
-
-onMounted(async () => {
-  await refreshCursorAccountStatus().catch(() => {});
-  cursorAccountTimer = window.setInterval(() => {
-    if (cursorAccountWaiting.value) {
-      void refreshCursorAccountStatus().catch(() => {});
-    }
-  }, 1500);
-});
-
-onUnmounted(() => {
-  if (cursorAccountTimer) {
-    window.clearInterval(cursorAccountTimer);
-    cursorAccountTimer = null;
-  }
-});
 </script>
 
 <template>
@@ -125,36 +53,30 @@ onUnmounted(() => {
           <span
             class="rounded-full border border-[#3a3a3a] bg-[#202020] px-2 py-0.5 text-xs text-[#b8b8b8]"
           >
-            {{ cursorAccountStateText }}
+            {{ stateText }}
           </span>
         </div>
       </div>
 
       <div class="flex items-end justify-between gap-4">
         <div class="min-w-0">
-          <div
-            v-if="cursorAccountDisplayIdentifier"
-            class="truncate text-sm text-[#d0d0d0]"
-          >
-            {{ cursorAccountDisplayIdentifier }}
+          <div v-if="maskedIdentifier" class="truncate text-sm text-[#d0d0d0]">
+            {{ maskedIdentifier }}
           </div>
           <div class="mt-1 text-sm text-[#a3a3a3]">
             独立用于插件、Skills 和 MCP；不会改变 Cursor 客户端当前账号
           </div>
-          <div v-if="cursorAccountWaiting" class="mt-1 text-sm text-[#d6a84b]">
+          <div v-if="waiting" class="mt-1 text-sm text-[#d6a84b]">
             请在浏览器完成登录，完成后返回 Cursor 重新打开插件市场
           </div>
-          <div
-            v-if="cursorAccountStatus.error"
-            class="mt-1 break-all text-sm text-[#e06c75]"
-          >
-            {{ cursorAccountStatus.error }}
+          <div v-if="status.error" class="mt-1 break-all text-sm text-[#e06c75]">
+            {{ status.error }}
           </div>
         </div>
         <Button
-          v-if="cursorAccountSignedIn"
+          v-if="signedIn"
           class="shrink-0"
-          :disabled="cursorAccountBusy"
+          :disabled="busy"
           @click="handleCursorAccountDisconnect"
         >
           退出登录
@@ -163,10 +85,10 @@ onUnmounted(() => {
           v-else
           class="shrink-0"
           variant="primary"
-          :disabled="cursorAccountBusy || cursorAccountWaiting"
+          :disabled="busy || waiting"
           @click="handleCursorAccountLogin"
         >
-          {{ cursorAccountWaiting ? "等待登录..." : "登录 Cursor" }}
+          {{ waiting ? "等待登录..." : "登录 Cursor" }}
         </Button>
       </div>
     </div>

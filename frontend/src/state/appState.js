@@ -610,6 +610,7 @@ function applyConfigToState(config, { modelAdaptersOnly = false } = {}) {
   appState.configBackendListenAddr = normalized.backendListenAddr;
   appState.configProxyListenAddr = normalized.proxyListenAddr;
   appState.includeCacheWriteInHitRate = normalized.homeMetrics.includeCacheWriteInHitRate;
+  appState.lastAgentModelHash = normalized.lastAgentModelHash;
   appState.commitModelHash = normalized.commitModelHash;
   appState.commitPrompt = normalized.commitPrompt;
   return normalized;
@@ -838,6 +839,8 @@ export const appState = reactive({
   configBackendListenAddr: cachedConfig.backendListenAddr,
   configProxyListenAddr: cachedConfig.proxyListenAddr,
   includeCacheWriteInHitRate: cachedConfig.homeMetrics.includeCacheWriteInHitRate,
+  lastAgentModelHash: asString(cachedConfig.lastAgentModelHash),
+  commitModelHash: asString(cachedConfig.commitModelHash),
 
   serviceRunning: asBoolean(cachedState.serviceRunning),
   backendRunning: asBoolean(cachedState.backendRunning),

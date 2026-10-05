@@ -14,7 +14,6 @@
     @cancel="resolveModal(false)"
   />
   <Modal
-    v-if="isMainWindow"
     :visible="appState.updatePromptVisible"
     :title="updateViewState.promptTitle"
     :content="updateViewState.promptContent"
@@ -45,9 +44,12 @@ import { modalState, resolveModal } from "@/composables/useModal";
 import InputModal from "@/components/ui/InputModal.vue";
 import { inputModalState, resolveInputModal } from "@/composables/useInputModal";
 import { appState, confirmUpdatePrompt, dismissUpdatePrompt, updateViewState } from "@/state/appState";
-import { computed } from "vue";
-import { useRoute } from "vue-router";
 
-const route = useRoute();
-const isMainWindow = computed(() => route.path === "/");
+// 更新弹窗曾用「当前是否首页」判断主窗口，导致切到其它 Tab 时弹窗不渲染。
+// 现在所有页面都在同一主窗口内切换路由，弹窗改为全局无条件渲染。
+// import { computed } from "vue";
+// import { useRoute } from "vue-router";
+//
+// const route = useRoute();
+// const isMainWindow = computed(() => route.path === "/");
 </script>

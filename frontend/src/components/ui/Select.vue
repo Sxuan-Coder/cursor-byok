@@ -11,10 +11,20 @@ const props = defineProps({
   placeholder: { type: String, default: "请选择" },
   disabled: { type: Boolean, default: false },
   border: { type: Boolean, default: true },
+  density: { type: String, default: "default" },
   ariaLabel: { type: String, default: "" },
   buttonClass: { type: String, default: "" },
   menuClass: { type: String, default: "" },
 });
+
+const DENSITY_CLASSES = {
+  default: "h-9 px-3 text-sm",
+  compact: "h-[30px] px-2 text-[12px]",
+};
+
+const densityClass = computed(
+  () => DENSITY_CLASSES[props.density] ?? DENSITY_CLASSES.default,
+);
 
 const emit = defineEmits(["update:modelValue", "change", "blur"]);
 
@@ -261,8 +271,9 @@ onBeforeUnmount(() => {
       ref="buttonRef"
       type="button"
       :disabled="disabled"
-      class="flex h-9 items-center rounded-[6px] bg-[#232323] px-3 text-left text-sm text-[#e5e5e5] outline-none transition-colors disabled:cursor-not-allowed disabled:opacity-60"
+      class="flex items-center rounded-[6px] bg-[#232323] text-left text-[#e5e5e5] outline-none transition-colors disabled:cursor-not-allowed disabled:opacity-60"
       :class="[
+        densityClass,
         border
           ? 'w-full justify-between gap-2 border border-[#3f3f3f] focus:border-[#10AD5D]'
           : 'w-auto justify-start gap-2 border border-transparent focus-visible:ring-2 focus-visible:ring-[#10AD5D]/35',
