@@ -526,7 +526,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 129,
+          "line": 164,
           "column": 74
         }
       ]
@@ -703,6 +703,23 @@
         }
       ]
     },
+    "1e97c52ff5700c93": {
+      "source": "提交 PR",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Config.vue",
+          "line": 233,
+          "column": 92
+        },
+        {
+          "file": "src/views/Config.vue",
+          "line": 241,
+          "column": 69
+        }
+      ]
+    },
     "1f9519d69197077e": {
       "source": "搜索模型标识",
       "kind": "text",
@@ -810,17 +827,27 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 45,
+          "line": 48,
           "column": 21
         },
         {
           "file": "src/views/Config.vue",
-          "line": 53,
+          "line": 56,
           "column": 21
         },
         {
           "file": "src/views/Config.vue",
-          "line": 61,
+          "line": 64,
+          "column": 21
+        },
+        {
+          "file": "src/views/Config.vue",
+          "line": 91,
+          "column": 21
+        },
+        {
+          "file": "src/views/Config.vue",
+          "line": 99,
           "column": 21
         }
       ]
@@ -1056,7 +1083,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 139,
+          "line": 174,
           "column": 67
         }
       ]
@@ -1068,7 +1095,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 38,
+          "line": 41,
           "column": 11
         }
       ]
@@ -1474,7 +1501,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 110,
+          "line": 142,
           "column": 53
         }
       ]
@@ -1568,6 +1595,18 @@
           "file": "src/components/ModelAdapterTestCard.vue",
           "line": 133,
           "column": 74
+        }
+      ]
+    },
+    "431752df4695243e": {
+      "source": "前往 Star",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Config.vue",
+          "line": 220,
+          "column": 67
         }
       ]
     },
@@ -1902,7 +1941,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 137,
+          "line": 172,
           "column": 76
         }
       ]
@@ -2136,7 +2175,7 @@
         },
         {
           "file": "src/views/Config.vue",
-          "line": 35,
+          "line": 38,
           "column": 21
         }
       ]
@@ -2165,7 +2204,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 95,
+          "line": 127,
           "column": 71
         }
       ]
@@ -2191,6 +2230,18 @@
           "file": "src/components/ModelAdapterCard.vue",
           "line": 75,
           "column": 100
+        }
+      ]
+    },
+    "63dcf80924e24b5c": {
+      "source": "支持本项目",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Config.vue",
+          "line": 195,
+          "column": 74
         }
       ]
     },
@@ -2263,6 +2314,18 @@
           "file": "src/state/appState.js",
           "line": 441,
           "column": 14
+        }
+      ]
+    },
+    "66e2b5c586ff4e30": {
+      "source": "设置提交信息提示词",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/components/overview/QuickActionsCard.vue",
+          "line": 55,
+          "column": 18
         }
       ]
     },
@@ -2438,22 +2501,22 @@
         },
         {
           "file": "src/views/Config.vue",
-          "line": 28,
+          "line": 31,
           "column": 34
         },
         {
           "file": "src/views/Config.vue",
-          "line": 28,
+          "line": 31,
           "column": 52
         },
         {
           "file": "src/views/Home.vue",
-          "line": 18,
+          "line": 21,
           "column": 43
         },
         {
           "file": "src/views/Home.vue",
-          "line": 18,
+          "line": 21,
           "column": 61
         },
         {
@@ -2511,7 +2574,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 128,
+          "line": 163,
           "column": 70
         }
       ]
@@ -2535,7 +2598,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 100,
+          "line": 132,
           "column": 14
         }
       ]
@@ -2641,7 +2704,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 123,
+          "line": 158,
           "column": 71
         }
       ]
@@ -2854,7 +2917,7 @@
         },
         {
           "file": "src/views/Config.vue",
-          "line": 152,
+          "line": 187,
           "column": 16
         }
       ]
@@ -2948,7 +3011,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 138,
+          "line": 173,
           "column": 71
         }
       ]
@@ -3003,6 +3066,18 @@
           "file": "src/views/Records.vue",
           "line": 68,
           "column": 39
+        }
+      ]
+    },
+    "84dcacd1a4714728": {
+      "source": "支持作者持续维护本项目",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Config.vue",
+          "line": 215,
+          "column": 78
         }
       ]
     },
@@ -3124,7 +3199,7 @@
       "refs": [
         {
           "file": "src/components/overview/QuickActionsCard.vue",
-          "line": 94,
+          "line": 103,
           "column": 70
         }
       ]
@@ -3235,7 +3310,7 @@
         },
         {
           "file": "src/views/Config.vue",
-          "line": 108,
+          "line": 140,
           "column": 76
         }
       ]
@@ -3266,6 +3341,18 @@
           "file": "src/composables/useConfigTransfer.js",
           "line": 79,
           "column": 15
+        }
+      ]
+    },
+    "8f52be33455036a2": {
+      "source": "欢迎通过 Pull Request 参与共建",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Config.vue",
+          "line": 236,
+          "column": 78
         }
       ]
     },
@@ -3300,7 +3387,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 113,
+          "line": 145,
           "column": 66
         }
       ]
@@ -3363,7 +3450,7 @@
         },
         {
           "file": "src/views/Config.vue",
-          "line": 100,
+          "line": 132,
           "column": 14
         },
         {
@@ -4048,7 +4135,7 @@
       "refs": [
         {
           "file": "src/views/Home.vue",
-          "line": 19,
+          "line": 22,
           "column": 13
         }
       ]
@@ -4322,6 +4409,18 @@
         }
       ]
     },
+    "b7c0ae170d5a2828": {
+      "source": "为仓库点 Star",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Config.vue",
+          "line": 212,
+          "column": 92
+        }
+      ]
+    },
     "b7ceef2fbfeb4a85": {
       "source": "例如：GPT-5",
       "kind": "text",
@@ -4456,6 +4555,18 @@
           "file": "src/state/appState.js",
           "line": 453,
           "column": 14
+        }
+      ]
+    },
+    "bec324a5d8b8c6cd": {
+      "source": "如果这个工具帮到了你，欢迎点亮 Star，或提交 PR 一起共建",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/views/Config.vue",
+          "line": 196,
+          "column": 69
         }
       ]
     },
@@ -4786,7 +4897,7 @@
       "refs": [
         {
           "file": "src/components/overview/QuickActionsCard.vue",
-          "line": 58,
+          "line": 64,
           "column": 21
         }
       ]
@@ -4863,7 +4974,7 @@
         },
         {
           "file": "src/components/overview/CacheGauge.vue",
-          "line": 91,
+          "line": 93,
           "column": 18
         }
       ]
@@ -4875,7 +4986,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 72,
+          "line": 75,
           "column": 21
         }
       ]
@@ -5039,7 +5150,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 122,
+          "line": 157,
           "column": 76
         }
       ]
@@ -5203,7 +5314,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 109,
+          "line": 141,
           "column": 71
         }
       ]
@@ -5302,7 +5413,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 94,
+          "line": 126,
           "column": 76
         }
       ]
@@ -5344,6 +5455,18 @@
         {
           "file": "src/composables/useCursorAccount.js",
           "line": 76,
+          "column": 12
+        }
+      ]
+    },
+    "e682f56bbf80c09d": {
+      "source": "Commit 提示词",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/components/overview/QuickActionsCard.vue",
+          "line": 54,
           "column": 12
         }
       ]
@@ -5642,7 +5765,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 80,
+          "line": 83,
           "column": 21
         }
       ]

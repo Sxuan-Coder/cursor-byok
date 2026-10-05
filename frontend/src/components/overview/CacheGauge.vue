@@ -9,7 +9,9 @@ const props = defineProps({
 const GEOMETRY = {
   cx: 66,
   cy: 66,
-  radius: 50,
+  // 半径 50 -> 58：让半圆在 132 宽的 viewBox 里更饱满，
+  // 端点含圆头描边后仍距画布边缘约 2.5，不会裁切。
+  radius: 58,
   stroke: 11,
 };
 
