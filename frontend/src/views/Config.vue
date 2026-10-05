@@ -22,6 +22,9 @@ const AUTHOR_REPOSITORY_URL = "https://github.com/Sxuan-Coder/cursor-byok";
 const AUTHOR_PULL_REQUEST_URL = `${AUTHOR_REPOSITORY_URL}/pulls`;
 const AUTHOR_LABEL = "@leookun & @Sxuan-Coder";
 
+// 「模型配置」入口打开的是独立子窗口，模型管理走侧栏 Tab 即可，此卡片暂时隐藏。
+const SHOW_MODEL_CONFIG_CARD = false;
+
 const route = useRoute();
 const message = useMessage();
 
@@ -134,7 +137,7 @@ onMounted(async () => {
       </div>
     </Card>
 
-    <Card>
+    <Card v-if="SHOW_MODEL_CONFIG_CARD">
       <div class="flex flex-wrap items-center justify-between gap-4">
         <div class="min-w-0">
           <h2 class="text-[13.5px] font-medium text-[var(--text-primary)]">模型配置</h2>
