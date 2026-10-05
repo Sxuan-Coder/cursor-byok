@@ -6,6 +6,7 @@ import router from "@/router";
 import { bootstrapAppState } from "@/state/appState";
 import "@/style/global.css";
 import "@/style/tailwind.css";
+import "@/style/theme.css";
 
 if (typeof window !== "undefined" && typeof window.ResizeObserver === "undefined") {
   window.ResizeObserver = ResizeObserver;

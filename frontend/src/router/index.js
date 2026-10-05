@@ -1,6 +1,8 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import Home from "@/views/Home.vue";
 import ModelConfig from "@/views/ModelConfig.vue";
+import Records from "@/views/Records.vue";
+import Settings from "@/views/Config.vue";
 import Usage from "@/views/Usage.vue";
 
 const router = createRouter({
@@ -9,17 +11,27 @@ const router = createRouter({
     {
       path: "/",
       component: Home,
-      meta: { showIcon: true, title: "Cursor助手｜永久免费｜自定义API", directlyClose: false },
+      meta: { title: "Cursor助手", directlyClose: false },
+    },
+    {
+      path: "/records",
+      component: Records,
+      meta: { title: "记录", directlyClose: false },
     },
     {
       path: "/model-config",
       component: ModelConfig,
-      meta: { showIcon: false, title: "模型配置", directlyClose: true },
+      meta: { title: "模型配置", directlyClose: false },
     },
     {
       path: "/usage",
       component: Usage,
-      meta: { showIcon: false, title: "用量报表", directlyClose: true },
+      meta: { title: "用量报表", directlyClose: false },
+    },
+    {
+      path: "/settings",
+      component: Settings,
+      meta: { title: "设置", directlyClose: false },
     },
   ],
 });

@@ -29,3 +29,6 @@ ui/
 
 # 本地 bugfix 排查文档，不入库
 docs/bugfix/
+
+# UI 重构期间的本地预览截图，不入库
+.ui-preview/

@@ -15,6 +15,7 @@ import {
   GetAppVersion,
   GetFooterAuthorInfo,
   InstallReadyUpdate,
+  LaunchCursor,
   OpenConfigWindow,
   OpenFooterAuthorHome,
   OpenHistoryWindow,
@@ -117,6 +118,10 @@ export function openLogsDirectory() {
 
 export function openConfigWindow() {
   return withApiLogging("OpenConfigWindow", undefined, () => OpenConfigWindow());
+}
+
+export function launchCursor() {
+  return withApiLogging("LaunchCursor", undefined, () => LaunchCursor());
 }
 
 export function getAppVersion() {
