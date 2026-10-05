@@ -362,7 +362,7 @@
       "refs": [
         {
           "file": "src/components/shell/TopNav.vue",
-          "line": 36,
+          "line": 40,
           "column": 13
         }
       ]
@@ -526,7 +526,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 142,
+          "line": 129,
           "column": 74
         }
       ]
@@ -651,9 +651,9 @@
           "column": 14
         },
         {
-          "file": "src/components/shell/SideNav.vue",
-          "line": 262,
-          "column": 20
+          "file": "src/components/shell/AccountMenu.vue",
+          "line": 229,
+          "column": 18
         }
       ]
     },
@@ -668,8 +668,8 @@
           "column": 13
         },
         {
-          "file": "src/components/shell/SideNav.vue",
-          "line": 104,
+          "file": "src/components/shell/AccountMenu.vue",
+          "line": 93,
           "column": 13
         }
       ]
@@ -810,17 +810,17 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 46,
+          "line": 45,
           "column": 21
         },
         {
           "file": "src/views/Config.vue",
-          "line": 54,
+          "line": 53,
           "column": 21
         },
         {
           "file": "src/views/Config.vue",
-          "line": 62,
+          "line": 61,
           "column": 21
         }
       ]
@@ -890,6 +890,18 @@
         }
       ]
     },
+    "27dd2fc3924f47df": {
+      "source": "登录后可获得 Cursor 插件 Skill 以及 MCP 商店的官方权限；该账号独立于 Cursor 客户端当前账号，不影响 Cursor 本身的登录状态。",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/components/shell/AccountMenu.vue",
+          "line": 197,
+          "column": 79
+        }
+      ]
+    },
     "281eb6d08c9960d0": {
       "source": "{0} 的思考预算 Token 必须为正整数",
       "kind": "template",
@@ -943,18 +955,6 @@
         }
       ]
     },
-    "28aeffc70ceb4267": {
-      "source": "切换当前界面显示语言，设置会立即生效并保存在本机",
-      "kind": "text",
-      "placeholders": 0,
-      "refs": [
-        {
-          "file": "src/views/Config.vue",
-          "line": 110,
-          "column": 71
-        }
-      ]
-    },
     "2b33d8eefb21926f": {
       "source": "加载用量报表失败",
       "kind": "text",
@@ -1003,8 +1003,8 @@
           "column": 79
         },
         {
-          "file": "src/components/shell/SideNav.vue",
-          "line": 95,
+          "file": "src/components/shell/AccountMenu.vue",
+          "line": 84,
           "column": 17
         },
         {
@@ -1056,7 +1056,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 152,
+          "line": 139,
           "column": 67
         }
       ]
@@ -1068,8 +1068,20 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 39,
+          "line": 38,
           "column": 11
+        }
+      ]
+    },
+    "2db92bf8a39950c9": {
+      "source": "登录后可获得 Cursor 插件 Skill 以及 MCP 商店的官方权限",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/components/shell/TopNav.vue",
+          "line": 73,
+          "column": 9
         }
       ]
     },
@@ -1266,18 +1278,6 @@
         }
       ]
     },
-    "37aa6ad6a36d46fa": {
-      "source": "打开设置",
-      "kind": "text",
-      "placeholders": 0,
-      "refs": [
-        {
-          "file": "src/components/shell/TopNav.vue",
-          "line": 97,
-          "column": 9
-        }
-      ]
-    },
     "37d23612f78a2e63": {
       "source": "立即重启更新",
       "kind": "text",
@@ -1362,19 +1362,19 @@
           "column": 11
         },
         {
-          "file": "src/components/shell/SideNav.vue",
-          "line": 92,
+          "file": "src/components/shell/AccountMenu.vue",
+          "line": 81,
           "column": 12
         },
         {
-          "file": "src/components/shell/SideNav.vue",
-          "line": 94,
+          "file": "src/components/shell/AccountMenu.vue",
+          "line": 83,
           "column": 18
         },
         {
-          "file": "src/components/shell/SideNav.vue",
-          "line": 251,
-          "column": 11
+          "file": "src/components/shell/AccountMenu.vue",
+          "line": 218,
+          "column": 9
         }
       ]
     },
@@ -1433,13 +1433,13 @@
       "refs": [
         {
           "file": "src/components/LocaleSelect.vue",
-          "line": 7,
+          "line": 8,
           "column": 39
         },
         {
-          "file": "src/views/Config.vue",
+          "file": "src/components/shell/TopNav.vue",
           "line": 109,
-          "column": 76
+          "column": 9
         }
       ]
     },
@@ -1474,7 +1474,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 123,
+          "line": 110,
           "column": 53
         }
       ]
@@ -1532,12 +1532,12 @@
       "refs": [
         {
           "file": "src/components/shell/SideNav.vue",
-          "line": 19,
+          "line": 15,
           "column": 26
         },
         {
           "file": "src/components/shell/TopNav.vue",
-          "line": 20,
+          "line": 24,
           "column": 26
         }
       ]
@@ -1589,9 +1589,9 @@
       "placeholders": 0,
       "refs": [
         {
-          "file": "src/components/shell/SideNav.vue",
-          "line": 237,
-          "column": 86
+          "file": "src/components/shell/AccountMenu.vue",
+          "line": 201,
+          "column": 84
         }
       ]
     },
@@ -1902,7 +1902,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 150,
+          "line": 137,
           "column": 76
         }
       ]
@@ -2136,7 +2136,7 @@
         },
         {
           "file": "src/views/Config.vue",
-          "line": 36,
+          "line": 35,
           "column": 21
         }
       ]
@@ -2165,7 +2165,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 96,
+          "line": 95,
           "column": 71
         }
       ]
@@ -2342,9 +2342,9 @@
           "column": 14
         },
         {
-          "file": "src/components/shell/SideNav.vue",
-          "line": 262,
-          "column": 20
+          "file": "src/components/shell/AccountMenu.vue",
+          "line": 229,
+          "column": 18
         }
       ]
     },
@@ -2438,12 +2438,12 @@
         },
         {
           "file": "src/views/Config.vue",
-          "line": 29,
+          "line": 28,
           "column": 34
         },
         {
           "file": "src/views/Config.vue",
-          "line": 29,
+          "line": 28,
           "column": 52
         },
         {
@@ -2511,7 +2511,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 141,
+          "line": 128,
           "column": 70
         }
       ]
@@ -2535,7 +2535,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 101,
+          "line": 100,
           "column": 14
         }
       ]
@@ -2641,7 +2641,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 136,
+          "line": 123,
           "column": 71
         }
       ]
@@ -2844,7 +2844,7 @@
       "refs": [
         {
           "file": "src/components/shell/SideNav.vue",
-          "line": 205,
+          "line": 77,
           "column": 15
         },
         {
@@ -2854,7 +2854,7 @@
         },
         {
           "file": "src/views/Config.vue",
-          "line": 165,
+          "line": 152,
           "column": 16
         }
       ]
@@ -2948,7 +2948,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 151,
+          "line": 138,
           "column": 71
         }
       ]
@@ -2964,9 +2964,9 @@
           "column": 56
         },
         {
-          "file": "src/components/shell/SideNav.vue",
-          "line": 217,
-          "column": 74
+          "file": "src/components/shell/AccountMenu.vue",
+          "line": 174,
+          "column": 72
         }
       ]
     },
@@ -3076,7 +3076,7 @@
       "refs": [
         {
           "file": "src/components/shell/SideNav.vue",
-          "line": 142,
+          "line": 38,
           "column": 71
         }
       ]
@@ -3235,7 +3235,7 @@
         },
         {
           "file": "src/views/Config.vue",
-          "line": 121,
+          "line": 108,
           "column": 76
         }
       ]
@@ -3300,7 +3300,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 126,
+          "line": 113,
           "column": 66
         }
       ]
@@ -3363,7 +3363,7 @@
         },
         {
           "file": "src/views/Config.vue",
-          "line": 101,
+          "line": 100,
           "column": 14
         },
         {
@@ -3479,7 +3479,7 @@
       "refs": [
         {
           "file": "src/components/shell/SideNav.vue",
-          "line": 139,
+          "line": 35,
           "column": 86
         },
         {
@@ -3622,6 +3622,18 @@
         }
       ]
     },
+    "9f6fee1aba17a565": {
+      "source": "语言",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/components/shell/TopNav.vue",
+          "line": 110,
+          "column": 9
+        }
+      ]
+    },
     "9fad24e2c377ee89": {
       "source": "记录",
       "kind": "text",
@@ -3629,12 +3641,12 @@
       "refs": [
         {
           "file": "src/components/shell/SideNav.vue",
-          "line": 17,
+          "line": 13,
           "column": 28
         },
         {
           "file": "src/components/shell/TopNav.vue",
-          "line": 18,
+          "line": 22,
           "column": 28
         },
         {
@@ -3774,8 +3786,8 @@
           "column": 13
         },
         {
-          "file": "src/components/shell/SideNav.vue",
-          "line": 86,
+          "file": "src/components/shell/AccountMenu.vue",
+          "line": 75,
           "column": 13
         }
       ]
@@ -4157,12 +4169,12 @@
       "refs": [
         {
           "file": "src/components/shell/TopNav.vue",
-          "line": 84,
+          "line": 95,
           "column": 9
         },
         {
           "file": "src/components/shell/TopNav.vue",
-          "line": 85,
+          "line": 96,
           "column": 9
         },
         {
@@ -4353,7 +4365,7 @@
       "refs": [
         {
           "file": "src/components/LocaleSelect.vue",
-          "line": 11,
+          "line": 12,
           "column": 41
         }
       ]
@@ -4379,18 +4391,6 @@
           "file": "src/components/ModelAdapterModal.vue",
           "line": 169,
           "column": 56
-        }
-      ]
-    },
-    "bade461fac1264d3": {
-      "source": "登录后可用插件市场、Skills 与 MCP 等控制面能力；该账号独立于 Cursor 客户端当前账号，不影响 Cursor 本身的登录状态。",
-      "kind": "text",
-      "placeholders": 0,
-      "refs": [
-        {
-          "file": "src/components/shell/SideNav.vue",
-          "line": 234,
-          "column": 81
         }
       ]
     },
@@ -4546,6 +4546,18 @@
         }
       ]
     },
+    "c1c49f8213ce5791": {
+      "source": "登录解锁插件",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/components/shell/AccountMenu.vue",
+          "line": 147,
+          "column": 48
+        }
+      ]
+    },
     "c1f9e9fc4b0afba1": {
       "source": "保存失败：{0}",
       "kind": "template",
@@ -4603,8 +4615,8 @@
           "column": 14
         },
         {
-          "file": "src/components/shell/SideNav.vue",
-          "line": 93,
+          "file": "src/components/shell/AccountMenu.vue",
+          "line": 82,
           "column": 14
         }
       ]
@@ -4676,12 +4688,12 @@
       "refs": [
         {
           "file": "src/components/shell/SideNav.vue",
-          "line": 18,
+          "line": 14,
           "column": 27
         },
         {
           "file": "src/components/shell/TopNav.vue",
-          "line": 19,
+          "line": 23,
           "column": 27
         },
         {
@@ -4851,7 +4863,7 @@
         },
         {
           "file": "src/components/overview/CacheGauge.vue",
-          "line": 80,
+          "line": 91,
           "column": 18
         }
       ]
@@ -4863,7 +4875,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 73,
+          "line": 72,
           "column": 21
         }
       ]
@@ -5027,7 +5039,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 135,
+          "line": 122,
           "column": 76
         }
       ]
@@ -5191,7 +5203,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 122,
+          "line": 109,
           "column": 71
         }
       ]
@@ -5203,18 +5215,13 @@
       "refs": [
         {
           "file": "src/components/shell/SideNav.vue",
-          "line": 20,
+          "line": 16,
           "column": 29
         },
         {
           "file": "src/components/shell/TopNav.vue",
-          "line": 21,
+          "line": 25,
           "column": 29
-        },
-        {
-          "file": "src/components/shell/TopNav.vue",
-          "line": 98,
-          "column": 9
         },
         {
           "file": "src/router/index.js",
@@ -5295,7 +5302,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 95,
+          "line": 94,
           "column": 76
         }
       ]
@@ -5635,7 +5642,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 81,
+          "line": 80,
           "column": 21
         }
       ]
@@ -5876,12 +5883,12 @@
       "refs": [
         {
           "file": "src/components/shell/SideNav.vue",
-          "line": 16,
+          "line": 12,
           "column": 29
         },
         {
           "file": "src/components/shell/TopNav.vue",
-          "line": 17,
+          "line": 21,
           "column": 29
         }
       ]

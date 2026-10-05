@@ -1,4 +1,7 @@
 <script setup>
+import LocaleSelect from "@/components/LocaleSelect.vue";
+import AccountMenu from "@/components/shell/AccountMenu.vue";
+import { useCursorAccount } from "@/composables/useCursorAccount";
 import { useMessage } from "@/composables/useMessage";
 import {
   appState,
@@ -12,6 +15,7 @@ import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
 const router = useRouter();
 const message = useMessage();
+const { signedIn } = useCursorAccount();
 
 const TABS = [
   { key: "overview", label: "概览", icon: "icon-[mdi--view-dashboard-outline]", path: "/" },
@@ -62,6 +66,13 @@ async function handleRefresh() {
     </nav>
 
     <div class="flex shrink-0 items-center gap-1.5">
+      <AccountMenu
+        v-if="!signedIn"
+        placement="bottom-end"
+        variant="pill"
+        title="登录后可获得 Cursor 插件 Skill 以及 MCP 商店的官方权限"
+      />
+
       <span
         class="flex items-center gap-1.5 rounded-[8px] border px-2.5 py-[5px] text-[11.5px]"
         :class="
@@ -91,15 +102,13 @@ async function handleRefresh() {
         ></span>
       </button>
 
-      <button
-        type="button"
-        class="flex h-[30px] w-[30px] items-center justify-center rounded-[8px] text-[var(--text-secondary)] transition-colors hover:bg-[var(--bg-hover)] hover:text-[var(--text-primary)]"
-        aria-label="打开设置"
-        title="设置"
-        @click="router.push('/settings')"
-      >
-        <span class="icon-[mdi--cog-outline] text-[16px]"></span>
-      </button>
+      <LocaleSelect
+        density="compact"
+        wrapper-class="w-[96px] shrink-0"
+        border
+        aria-label="界面语言"
+        placeholder="语言"
+      />
     </div>
   </header>
 </template>

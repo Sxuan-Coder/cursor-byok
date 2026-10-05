@@ -2,7 +2,6 @@
 import Button from "@/components/ui/Button.vue";
 import Card from "@/components/ui/Card.vue";
 import CommitMessageCard from "@/components/CommitMessageCard.vue";
-import LocaleSelect from "@/components/LocaleSelect.vue";
 import { useMessage } from "@/composables/useMessage";
 import {
   appState,
@@ -100,18 +99,6 @@ onMounted(async () => {
         <Button variant="primary" :disabled="appState.configSaving" @click="handleSaveConfig">
           {{ appState.configSaving ? "保存中..." : "保存配置" }}
         </Button>
-      </div>
-    </Card>
-
-    <Card>
-      <div class="flex flex-wrap items-center justify-between gap-4">
-        <div class="min-w-0">
-          <h2 class="text-[13.5px] font-medium text-[var(--text-primary)]">界面语言</h2>
-          <div class="mt-1 text-[12px] text-[var(--text-secondary)]">
-            切换当前界面显示语言，设置会立即生效并保存在本机
-          </div>
-        </div>
-        <LocaleSelect wrapper-class="w-[220px] max-w-full" />
       </div>
     </Card>
 
