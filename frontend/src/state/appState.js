@@ -553,6 +553,8 @@ function normalizeConfig(source) {
       includeCacheWriteInHitRate: asBoolean(homeMetrics.includeCacheWriteInHitRate),
     },
     lastAgentModelHash: asString(raw.lastAgentModelHash),
+    commitModelHash: asString(raw.commitModelHash),
+    commitPrompt: asString(raw.commitPrompt),
   };
 }
 
@@ -593,6 +595,8 @@ function buildConfigPayload(source = appState) {
     modelAdapters: normalized.modelAdapters.map(({ id, ...adapter }) => adapter),
     homeMetrics: normalized.homeMetrics,
     lastAgentModelHash: normalized.lastAgentModelHash,
+    commitModelHash: normalized.commitModelHash,
+    commitPrompt: normalized.commitPrompt,
   };
 }
 
@@ -606,6 +610,8 @@ function applyConfigToState(config, { modelAdaptersOnly = false } = {}) {
   appState.configBackendListenAddr = normalized.backendListenAddr;
   appState.configProxyListenAddr = normalized.proxyListenAddr;
   appState.includeCacheWriteInHitRate = normalized.homeMetrics.includeCacheWriteInHitRate;
+  appState.commitModelHash = normalized.commitModelHash;
+  appState.commitPrompt = normalized.commitPrompt;
   return normalized;
 }
 
@@ -1126,6 +1132,15 @@ export async function persistUserConfig() {
       ...currentConfig.homeMetrics,
       includeCacheWriteInHitRate: appState.includeCacheWriteInHitRate,
     },
+  });
+}
+
+export async function saveCommitConfig(modelHash, prompt) {
+  const currentConfig = await loadPersistedUserConfig();
+  return persistConfigPayload({
+    ...currentConfig,
+    commitModelHash: asString(modelHash).trim(),
+    commitPrompt: asString(prompt).trim(),
   });
 }
 

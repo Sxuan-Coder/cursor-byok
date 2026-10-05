@@ -450,7 +450,7 @@ func (host *Host) rebuildLocked(cfg serverconfig.Config) error {
 		tabServerProcedure("/aiserver.v1.AiService/CppAppend", "ai_cpp_append", server.ConnectUnary(), routeDeps),
 		tabServerProcedure("/aiserver.v1.AiService/CppEditHistoryAppend", "ai_cpp_edit_history_append", server.ConnectUnary(), routeDeps),
 		tabServerProcedure("/aiserver.v1.AiService/ReportAiCodeChangeMetrics", "ai_report_ai_code_change_metrics", server.ConnectUnary(), routeDeps),
-		tabServerProcedure("/aiserver.v1.AiService/WriteGitCommitMessage", "ai_write_git_commit_message", server.ConnectUnary(), routeDeps),
+		commitMessageProcedure("/aiserver.v1.AiService/WriteGitCommitMessage", "ai_write_git_commit_message", server.ConnectUnary(), routeDeps, agentModule, host.configs),
 		tabServerProcedure("/aiserver.v1.AiService/WriteGitBranchName", "ai_write_git_branch_name", server.ConnectUnary(), routeDeps),
 		repositoryServiceProcedure(forwarder.RepositoryServiceFastRepoInitHandshakeV2Procedure, "repository_fast_repo_init_handshake_v2", server.ConnectUnary(), agentModule),
 		repositoryServiceProcedure(forwarder.RepositoryServiceFastRepoInitHandshakeProcedure, "repository_fast_repo_init_handshake", server.ConnectUnary(), agentModule),
@@ -793,9 +793,9 @@ func uploadServiceProcedure(pattern string, name string, protocol server.RouteOp
 	)
 }
 
-func tabServerProcedure(pattern string, name string, protocol server.RouteOption, deps upstream.Dependencies) server.Option {
-	forward := upstream.ForwardAction(deps, upstream.CompatRouteConfig{Name: name})
-	action := func(ctx *server.Context) error {
+// rewriteToTabServer 把请求目标改写到 tab server 并转发。
+func rewriteToTabServer(forward server.HandlerFunc) server.HandlerFunc {
+	return func(ctx *server.Context) error {
 		if ctx != nil && ctx.Request != nil && ctx.Request.URL != nil {
 			baseURL, err := url.Parse(tabServerBaseURL)
 			if err != nil {
@@ -808,11 +808,45 @@ func tabServerProcedure(pattern string, name string, protocol server.RouteOption
 		}
 		return forward(ctx)
 	}
+}
+
+func tabServerProcedure(pattern string, name string, protocol server.RouteOption, deps upstream.Dependencies) server.Option {
+	forward := upstream.ForwardAction(deps, upstream.CompatRouteConfig{Name: name})
+	return server.POST(pattern,
+		server.Name(name),
+		protocol,
+		server.Local(rewriteToTabServer(forward)),
+	)
+}
+
+// commitMessageProcedure 按配置在本地 BYOK 生成与 tab server 转发之间切换：
+// CommitModelHash 为空保持直连转发（现状），非空则走本地 WriteGitCommitMessage。
+// 每次请求读取 Manager.Current()，运行中改配置即时生效。
+func commitMessageProcedure(
+	pattern string,
+	name string,
+	protocol server.RouteOption,
+	deps upstream.Dependencies,
+	module *forwarder.Module,
+	configs *serverconfig.Manager,
+) server.Option {
+	forward := rewriteToTabServer(upstream.ForwardAction(deps, upstream.CompatRouteConfig{Name: name}))
+	local := server.HTTPHandlerAction(module.LocalWriteGitCommitMessageHandler)
+	action := func(ctx *server.Context) error {
+		if useLocalCommitGeneration(configs) {
+			return local(ctx)
+		}
+		return forward(ctx)
+	}
 	return server.POST(pattern,
 		server.Name(name),
 		protocol,
 		server.Local(action),
 	)
+}
+
+func useLocalCommitGeneration(configs *serverconfig.Manager) bool {
+	return configs != nil && configs.CommitModelHash() != ""
 }
 
 func cursorControlPlaneProcedure(

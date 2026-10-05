@@ -106,6 +106,20 @@ func (manager *Manager) SaveLastAgentModelHash(ctx context.Context, value string
 	return err
 }
 
+func (manager *Manager) CommitModelHash() string {
+	if manager == nil {
+		return ""
+	}
+	return strings.TrimSpace(manager.Current().CommitModelHash)
+}
+
+func (manager *Manager) CommitPrompt() string {
+	if manager == nil {
+		return ""
+	}
+	return strings.TrimSpace(manager.Current().CommitPrompt)
+}
+
 func (manager *Manager) ProviderStreamIdleTimeout(ctx context.Context) time.Duration {
 	if manager == nil {
 		return time.Duration(DefaultProviderStreamIdleTimeoutSeconds) * time.Second

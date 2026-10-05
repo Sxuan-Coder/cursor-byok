@@ -60,7 +60,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1017,
+          "line": 1023,
           "column": 14
         }
       ]
@@ -147,6 +147,23 @@
           "file": "src/components/ModelAdapterCard.vue",
           "line": 74,
           "column": 95
+        }
+      ]
+    },
+    "0525054436acdb6e": {
+      "source": "提交信息提示词",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/components/CommitMessageCard.vue",
+          "line": 109,
+          "column": 36
+        },
+        {
+          "file": "src/components/CommitMessageCard.vue",
+          "line": 115,
+          "column": 9
         }
       ]
     },
@@ -263,7 +280,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 50,
+          "line": 51,
           "column": 48
         }
       ]
@@ -289,6 +306,18 @@
           "file": "src/components/HomeMetricsCard.vue",
           "line": 172,
           "column": 5
+        }
+      ]
+    },
+    "1127648e33e25012": {
+      "source": "Commit 提交信息",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/components/CommitMessageCard.vue",
+          "line": 83,
+          "column": 54
         }
       ]
     },
@@ -345,6 +374,18 @@
         }
       ]
     },
+    "15d8fe8e9284bb3f": {
+      "source": "提交信息已切换为本地模型生成",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/components/CommitMessageCard.vue",
+          "line": 35,
+          "column": 21
+        }
+      ]
+    },
     "1616f045c9563e40": {
       "source": "接口地址缺少主机名",
       "kind": "text",
@@ -376,8 +417,20 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 994,
+          "line": 1000,
           "column": 47
+        }
+      ]
+    },
+    "19bb071f8c362695": {
+      "source": "提示词设置",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/components/CommitMessageCard.vue",
+          "line": 102,
+          "column": 11
         }
       ]
     },
@@ -531,12 +584,12 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 618,
+          "line": 624,
           "column": 32
         },
         {
           "file": "src/state/appState.js",
-          "line": 1141,
+          "line": 1156,
           "column": 21
         }
       ]
@@ -560,22 +613,22 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 35,
+          "line": 36,
           "column": 21
         },
         {
           "file": "src/views/Home.vue",
-          "line": 56,
+          "line": 57,
           "column": 21
         },
         {
           "file": "src/views/Home.vue",
-          "line": 64,
+          "line": 65,
           "column": 21
         },
         {
           "file": "src/views/Home.vue",
-          "line": 72,
+          "line": 73,
           "column": 21
         }
       ]
@@ -592,6 +645,18 @@
         }
       ]
     },
+    "25b95293def3edae": {
+      "source": "直连（默认）",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/components/CommitMessageCard.vue",
+          "line": 18,
+          "column": 12
+        }
+      ]
+    },
     "26a3855aed1d8d17": {
       "source": "服务未启动",
       "kind": "text",
@@ -599,7 +664,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 985,
+          "line": 991,
           "column": 12
         }
       ]
@@ -640,7 +705,7 @@
         },
         {
           "file": "src/state/appState.js",
-          "line": 1414,
+          "line": 1429,
           "column": 32
         }
       ]
@@ -652,7 +717,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 64,
+          "line": 65,
           "column": 48
         }
       ]
@@ -674,6 +739,11 @@
       "kind": "text",
       "placeholders": 0,
       "refs": [
+        {
+          "file": "src/components/CommitMessageCard.vue",
+          "line": 120,
+          "column": 66
+        },
         {
           "file": "src/components/CursorAccountCard.vue",
           "line": 87,
@@ -731,7 +801,7 @@
         },
         {
           "file": "src/state/appState.js",
-          "line": 1059,
+          "line": 1065,
           "column": 12
         },
         {
@@ -748,7 +818,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 28,
+          "line": 29,
           "column": 11
         }
       ]
@@ -864,6 +934,18 @@
         }
       ]
     },
+    "34a8d0b478dc8056": {
+      "source": "选择生成提交信息的模型；选择“直连（默认）”时保持官方通道转发，保存后立即生效",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/components/CommitMessageCard.vue",
+          "line": 84,
+          "column": 46
+        }
+      ]
+    },
     "35076178fe79a210": {
       "source": "配置已变更，请重新测试",
       "kind": "text",
@@ -895,7 +977,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1051,
+          "line": 1057,
           "column": 14
         }
       ]
@@ -1038,7 +1120,7 @@
         },
         {
           "file": "src/views/Config.vue",
-          "line": 63,
+          "line": 64,
           "column": 56
         }
       ]
@@ -1062,7 +1144,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1015,
+          "line": 1021,
           "column": 5
         }
       ]
@@ -1074,7 +1156,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 77,
+          "line": 78,
           "column": 53
         }
       ]
@@ -1260,8 +1342,8 @@
         },
         {
           "file": "src/components/ModelPickerModal.vue",
-          "line": 258,
-          "column": 1
+          "line": 257,
+          "column": 138
         }
       ]
     },
@@ -1351,6 +1433,18 @@
           "file": "src/composables/useConfigTransfer.js",
           "line": 11,
           "column": 42
+        }
+      ]
+    },
+    "512fc90d45b3a3e5": {
+      "source": "提交信息生成模型",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/components/CommitMessageCard.vue",
+          "line": 94,
+          "column": 13
         }
       ]
     },
@@ -1556,12 +1650,12 @@
       "refs": [
         {
           "file": "src/views/Home.vue",
-          "line": 39,
+          "line": 40,
           "column": 21
         },
         {
           "file": "src/views/Home.vue",
-          "line": 49,
+          "line": 50,
           "column": 19
         }
       ]
@@ -1595,7 +1689,7 @@
         },
         {
           "file": "src/views/Config.vue",
-          "line": 25,
+          "line": 26,
           "column": 21
         }
       ]
@@ -1679,7 +1773,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 983,
+          "line": 989,
           "column": 14
         }
       ]
@@ -1744,7 +1838,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1365,
+          "line": 1380,
           "column": 14
         }
       ]
@@ -1802,7 +1896,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1384,
+          "line": 1399,
           "column": 14
         }
       ]
@@ -1812,6 +1906,16 @@
       "kind": "text",
       "placeholders": 0,
       "refs": [
+        {
+          "file": "src/components/CommitMessageCard.vue",
+          "line": 33,
+          "column": 39
+        },
+        {
+          "file": "src/components/CommitMessageCard.vue",
+          "line": 67,
+          "column": 39
+        },
         {
           "file": "src/components/CursorAccountCard.vue",
           "line": 62,
@@ -1829,22 +1933,22 @@
         },
         {
           "file": "src/views/Config.vue",
-          "line": 18,
+          "line": 19,
           "column": 34
         },
         {
           "file": "src/views/Config.vue",
-          "line": 18,
+          "line": 19,
           "column": 52
         },
         {
           "file": "src/views/Home.vue",
-          "line": 22,
+          "line": 23,
           "column": 34
         },
         {
           "file": "src/views/Home.vue",
-          "line": 22,
+          "line": 23,
           "column": 52
         },
         {
@@ -1902,7 +2006,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 55,
+          "line": 56,
           "column": 14
         }
       ]
@@ -1967,7 +2071,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1251,
+          "line": 1266,
           "column": 14
         }
       ]
@@ -2025,7 +2129,7 @@
         },
         {
           "file": "src/views/Home.vue",
-          "line": 120,
+          "line": 123,
           "column": 68
         }
       ]
@@ -2170,7 +2274,7 @@
       "refs": [
         {
           "file": "src/views/Home.vue",
-          "line": 29,
+          "line": 30,
           "column": 21
         }
       ]
@@ -2182,8 +2286,8 @@
       "refs": [
         {
           "file": "src/components/ModelPickerModal.vue",
-          "line": 307,
-          "column": 1
+          "line": 306,
+          "column": 76
         }
       ]
     },
@@ -2199,7 +2303,7 @@
         },
         {
           "file": "src/state/appState.js",
-          "line": 1036,
+          "line": 1042,
           "column": 16
         }
       ]
@@ -2264,7 +2368,7 @@
       "refs": [
         {
           "file": "src/views/Home.vue",
-          "line": 46,
+          "line": 47,
           "column": 13
         }
       ]
@@ -2334,7 +2438,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 980,
+          "line": 986,
           "column": 14
         }
       ]
@@ -2370,8 +2474,8 @@
       "refs": [
         {
           "file": "src/components/ModelPickerModal.vue",
-          "line": 296,
-          "column": 1
+          "line": 295,
+          "column": 13
         }
       ]
     },
@@ -2435,6 +2539,18 @@
         }
       ]
     },
+    "8b85821050f1a8ab": {
+      "source": "提交信息已恢复直连",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/components/CommitMessageCard.vue",
+          "line": 35,
+          "column": 40
+        }
+      ]
+    },
     "8c1935935600e336": {
       "source": "模型测试",
       "kind": "text",
@@ -2464,12 +2580,12 @@
         },
         {
           "file": "src/views/Config.vue",
-          "line": 75,
+          "line": 76,
           "column": 56
         },
         {
           "file": "src/views/Home.vue",
-          "line": 121,
+          "line": 124,
           "column": 68
         }
       ]
@@ -2529,7 +2645,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 80,
+          "line": 81,
           "column": 66
         }
       ]
@@ -2576,6 +2692,11 @@
       "placeholders": 0,
       "refs": [
         {
+          "file": "src/components/CommitMessageCard.vue",
+          "line": 122,
+          "column": 16
+        },
+        {
           "file": "src/components/ModelEditor.vue",
           "line": 616,
           "column": 12
@@ -2587,7 +2708,7 @@
         },
         {
           "file": "src/views/Config.vue",
-          "line": 55,
+          "line": 56,
           "column": 14
         },
         {
@@ -2688,12 +2809,12 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1507,
+          "line": 1522,
           "column": 32
         },
         {
           "file": "src/state/appState.js",
-          "line": 1528,
+          "line": 1543,
           "column": 32
         }
       ]
@@ -2758,7 +2879,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1057,
+          "line": 1063,
           "column": 14
         }
       ]
@@ -2830,12 +2951,12 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1003,
+          "line": 1009,
           "column": 12
         },
         {
           "file": "src/state/appState.js",
-          "line": 1046,
+          "line": 1052,
           "column": 87
         }
       ]
@@ -2868,6 +2989,11 @@
       "placeholders": 0,
       "refs": [
         {
+          "file": "src/components/CommitMessageCard.vue",
+          "line": 122,
+          "column": 16
+        },
+        {
           "file": "src/components/ModelAdapterModal.vue",
           "line": 291,
           "column": 63
@@ -2891,7 +3017,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1301,
+          "line": 1316,
           "column": 14
         },
         {
@@ -3080,8 +3206,20 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1032,
+          "line": 1038,
           "column": 16
+        }
+      ]
+    },
+    "ac46244180a0c8fa": {
+      "source": "提交信息提示词已保存",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/components/CommitMessageCard.vue",
+          "line": 70,
+          "column": 13
         }
       ]
     },
@@ -3092,7 +3230,7 @@
       "refs": [
         {
           "file": "src/views/Home.vue",
-          "line": 116,
+          "line": 119,
           "column": 47
         }
       ]
@@ -3235,7 +3373,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1434,
+          "line": 1449,
           "column": 32
         }
       ]
@@ -3360,6 +3498,18 @@
         }
       ]
     },
+    "ba2e93e73037c71e": {
+      "source": "恢复默认",
+      "kind": "text",
+      "placeholders": 0,
+      "refs": [
+        {
+          "file": "src/components/CommitMessageCard.vue",
+          "line": 118,
+          "column": 53
+        }
+      ]
+    },
     "ba3c66f90fd11725": {
       "source": "已识别系统代理",
       "kind": "text",
@@ -3420,7 +3570,7 @@
         },
         {
           "file": "src/state/appState.js",
-          "line": 1411,
+          "line": 1426,
           "column": 32
         }
       ]
@@ -3492,8 +3642,8 @@
       "refs": [
         {
           "file": "src/components/ModelPickerModal.vue",
-          "line": 251,
-          "column": 1
+          "line": 250,
+          "column": 113
         }
       ]
     },
@@ -3528,6 +3678,23 @@
           "file": "src/components/ModelPickerModal.vue",
           "line": 114,
           "column": 79
+        }
+      ]
+    },
+    "c1f9e9fc4b0afba1": {
+      "source": "保存失败：{0}",
+      "kind": "template",
+      "placeholders": 1,
+      "refs": [
+        {
+          "file": "src/components/CommitMessageCard.vue",
+          "line": 37,
+          "column": 13
+        },
+        {
+          "file": "src/components/CommitMessageCard.vue",
+          "line": 72,
+          "column": 13
         }
       ]
     },
@@ -3603,7 +3770,7 @@
       "refs": [
         {
           "file": "src/views/Home.vue",
-          "line": 119,
+          "line": 122,
           "column": 63
         }
       ]
@@ -3651,17 +3818,17 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1272,
+          "line": 1287,
           "column": 28
         },
         {
           "file": "src/state/appState.js",
-          "line": 1274,
+          "line": 1289,
           "column": 38
         },
         {
           "file": "src/state/appState.js",
-          "line": 1309,
+          "line": 1324,
           "column": 93
         },
         {
@@ -3700,7 +3867,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 992,
+          "line": 998,
           "column": 51
         }
       ]
@@ -3820,7 +3987,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1220,
+          "line": 1235,
           "column": 14
         },
         {
@@ -4011,7 +4178,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1014,
+          "line": 1020,
           "column": 5
         }
       ]
@@ -4035,7 +4202,7 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 76,
+          "line": 77,
           "column": 48
         }
       ]
@@ -4076,7 +4243,7 @@
         },
         {
           "file": "src/state/appState.js",
-          "line": 1138,
+          "line": 1153,
           "column": 21
         }
       ]
@@ -4112,12 +4279,12 @@
       "refs": [
         {
           "file": "src/views/Config.vue",
-          "line": 49,
+          "line": 50,
           "column": 56
         },
         {
           "file": "src/views/Home.vue",
-          "line": 115,
+          "line": 118,
           "column": 56
         }
       ]
@@ -4177,8 +4344,8 @@
       "refs": [
         {
           "file": "src/components/ModelPickerModal.vue",
-          "line": 245,
-          "column": 1
+          "line": 244,
+          "column": 140
         }
       ]
     },
@@ -4290,7 +4457,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1034,
+          "line": 1040,
           "column": 16
         }
       ]
@@ -4326,7 +4493,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 1462,
+          "line": 1477,
           "column": 32
         }
       ]
@@ -4391,7 +4558,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 994,
+          "line": 1000,
           "column": 38
         }
       ]
@@ -4564,7 +4731,7 @@
         },
         {
           "file": "src/state/appState.js",
-          "line": 1053,
+          "line": 1059,
           "column": 12
         }
       ]
@@ -4608,7 +4775,7 @@
       "refs": [
         {
           "file": "src/state/appState.js",
-          "line": 992,
+          "line": 998,
           "column": 40
         }
       ]

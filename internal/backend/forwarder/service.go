@@ -258,6 +258,7 @@ type Service struct {
 	provider           ProviderGateway
 	resolver           modeladapter.ChannelResolver
 	modelMemory        agentModelMemory
+	commitConfig       commitConfigProvider
 	broker             *StreamBroker
 	recorder           *artifactRecorder
 	debug              *debugRecorder
@@ -271,6 +272,11 @@ type agentModelMemory interface {
 	SaveLastAgentModelHash(context.Context, string) error
 }
 
+type commitConfigProvider interface {
+	CommitModelHash() string
+	CommitPrompt() string
+}
+
 // NewService 使用默认依赖创建 forwarder 服务。
 func NewService(historyRoot string, resolver modeladapter.ChannelResolver) *Service {
 	projector := NewHistoryProjector()
@@ -281,6 +287,10 @@ func NewService(historyRoot string, resolver modeladapter.ChannelResolver) *Serv
 	var modelMemory agentModelMemory
 	if candidate, ok := resolver.(agentModelMemory); ok {
 		modelMemory = candidate
+	}
+	var commitConfig commitConfigProvider
+	if candidate, ok := resolver.(commitConfigProvider); ok {
+		commitConfig = candidate
 	}
 	var debugConfig debugLogConfig
 	if candidate, ok := resolver.(debugLogConfig); ok {
@@ -299,6 +309,7 @@ func NewService(historyRoot string, resolver modeladapter.ChannelResolver) *Serv
 		provider:           NewProviderGateway(resolver),
 		resolver:           resolver,
 		modelMemory:        modelMemory,
+		commitConfig:       commitConfig,
 		broker:             broker,
 		recorder:           newArtifactRecorder(store, broker, debug),
 		debug:              debug,

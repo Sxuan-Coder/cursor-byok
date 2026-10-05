@@ -2,9 +2,11 @@ package client
 
 import (
 	"context"
+	"strings"
 
 	"cursor/internal/appdata"
 	serverconfig "cursor/internal/backend/server/config"
+	promptassets "cursor/prompt"
 
 	"github.com/wailsapp/wails/v3/pkg/application"
 )
@@ -97,4 +99,13 @@ func ResolveLogsRootPath() string {
 // ResolveSettingsRootPath 用于处理与 ResolveSettingsRootPath 相关的逻辑。
 func ResolveSettingsRootPath() string {
 	return appdata.RootDir()
+}
+
+// GetCommitPromptDefault 返回内置默认提交信息提示词，供前端「恢复默认」使用。
+func (s *ProxyService) GetCommitPromptDefault() string {
+	prompt, err := promptassets.ReadCommitPrompt()
+	if err != nil || strings.TrimSpace(prompt) == "" {
+		return ""
+	}
+	return prompt
 }

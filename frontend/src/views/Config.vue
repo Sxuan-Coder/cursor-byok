@@ -1,6 +1,7 @@
 <script setup>
 import Button from "@/components/ui/Button.vue";
 import Card from "@/components/ui/Card.vue";
+import CommitMessageCard from "@/components/CommitMessageCard.vue";
 import LocaleSelect from "@/components/LocaleSelect.vue";
 import { useMessage } from "@/composables/useMessage";
 import {
@@ -80,5 +81,7 @@ onMounted(async () => {
         <Button variant="primary" @click="handleOpenModelConfig">打开模型配置</Button>
       </div>
     </Card>
+
+    <CommitMessageCard />
   </div>
 </template>

@@ -3,6 +3,7 @@ import Button from "@/components/ui/Button.vue";
 import Card from "@/components/ui/Card.vue";
 import HomeMetricsCard from "@/components/HomeMetricsCard.vue";
 import CursorAccountCard from "@/components/CursorAccountCard.vue";
+import CommitMessageCard from "@/components/CommitMessageCard.vue";
 import { useMessage } from "@/composables/useMessage";
 import {
   appState,
@@ -108,6 +109,8 @@ async function handleOpenUsageReport() {
     </Card>
 
     <CursorAccountCard />
+
+    <CommitMessageCard />
 
     <Card class="">
       <div class="flex items-center justify-between gap-4">
