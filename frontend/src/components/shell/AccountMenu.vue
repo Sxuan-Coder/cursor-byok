@@ -144,7 +144,7 @@ watchPostEffect((cleanup) => {
   >
     <template v-if="variant === 'pill'">
       <span class="icon-[mdi--shield-account-outline] shrink-0 text-[14px]"></span>
-      <span class="shrink-0 whitespace-nowrap">登录解锁插件</span>
+      <span class="min-w-0 max-w-[132px] truncate">登录解锁插件</span>
     </template>
 
     <template v-else>

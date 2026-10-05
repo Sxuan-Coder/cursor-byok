@@ -3,19 +3,21 @@ import LocaleSelect from "@/components/LocaleSelect.vue";
 import AccountMenu from "@/components/shell/AccountMenu.vue";
 import { useCursorAccount } from "@/composables/useCursorAccount";
 import { useMessage } from "@/composables/useMessage";
+import { useLocale } from "@/i18n/runtime";
 import {
   appState,
   appViewState,
   syncHomeMetrics,
   syncServiceState,
 } from "@/state/appState";
-import { computed } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
 const router = useRouter();
 const message = useMessage();
 const { signedIn } = useCursorAccount();
+const { locale } = useLocale();
 
 const TABS = [
   { key: "overview", label: "概览", icon: "icon-[mdi--view-dashboard-outline]", path: "/" },
@@ -28,6 +30,47 @@ const TABS = [
 const statusText = computed(() => appViewState.serviceStatusText);
 const serviceRunning = computed(() => appState.serviceRunning);
 const refreshing = computed(() => appState.homeMetricsLoading);
+
+// 顶栏导航与侧边栏重复，窗口较窄或非中文文案更长时只留图标，
+// 避免把右侧操作区挤出去（侧边栏仍提供带文字的导航）。
+// tab 文字可截断，直接比较 scrollWidth 会测不出溢出，所以先让 tab 按自然宽度
+// 展开测量，再把结果写回状态；两次 DOM 更新都在同一微任务批次内，不会出现闪烁。
+const navRef = ref(null);
+const compactTabs = ref(false);
+const probingTabs = ref(false);
+let navResizeObserver = null;
+
+async function fitTabs() {
+  compactTabs.value = false;
+  probingTabs.value = true;
+  await nextTick();
+
+  const nav = navRef.value;
+  if (nav && nav.clientWidth > 0) {
+    compactTabs.value = nav.scrollWidth > nav.clientWidth + 1;
+  }
+  probingTabs.value = false;
+  await nextTick();
+}
+
+onMounted(() => {
+  void fitTabs();
+  navResizeObserver = new ResizeObserver(() => {
+    void fitTabs();
+  });
+  if (navRef.value) {
+    navResizeObserver.observe(navRef.value);
+  }
+});
+
+onBeforeUnmount(() => {
+  navResizeObserver?.disconnect();
+  navResizeObserver = null;
+});
+
+watch(locale, () => {
+  void fitTabs();
+});
 
 function isActive(path) {
   return route.path === path;
@@ -46,22 +89,25 @@ async function handleRefresh() {
   <header
     class="flex h-[var(--topbar-h)] shrink-0 items-center justify-between gap-3 border-b border-[var(--border-subtle)] bg-[var(--bg-content)] px-4"
   >
-    <nav class="flex min-w-0 items-center gap-1.5">
+    <nav ref="navRef" class="flex min-w-0 flex-1 items-center gap-1.5 overflow-hidden">
       <button
         v-for="tab in TABS"
         :key="tab.key"
         type="button"
-        class="flex shrink-0 items-center gap-1.5 rounded-[9px] border px-3 py-[6px] text-[12.5px] transition-colors"
-        :class="
+        class="flex items-center gap-1.5 rounded-[9px] border px-3 py-[6px] text-[12.5px] transition-colors"
+        :title="tab.label"
+        :aria-label="tab.label"
+        :class="[
+          probingTabs ? 'shrink-0' : 'min-w-0',
           isActive(tab.path)
             ? 'border-[var(--brand-border)] bg-[var(--brand-soft-strong)] font-medium text-[var(--brand)]'
-            : 'border-transparent text-[var(--text-secondary)] hover:bg-[var(--bg-hover)] hover:text-[var(--text-primary)]'
-        "
+            : 'border-transparent text-[var(--text-secondary)] hover:bg-[var(--bg-hover)] hover:text-[var(--text-primary)]',
+        ]"
         :aria-current="isActive(tab.path) ? 'page' : undefined"
         @click="router.push(tab.path)"
       >
         <span :class="[tab.icon, 'text-[15px] shrink-0']"></span>
-        <span class="truncate">{{ tab.label }}</span>
+        <span v-if="!compactTabs" class="truncate">{{ tab.label }}</span>
       </button>
     </nav>
 

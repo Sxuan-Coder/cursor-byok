@@ -13,11 +13,11 @@ const GEOMETRY = {
   stroke: 11,
 };
 
-// 弧线本体按 132×78 绘制，容器再加高到 132×90，把百分比读数放到弧线下方，
-// 避免数字贴住弧线内缘。
+// 弧线本体按 132×78 绘制，容器再加高到 132×94，把百分比读数放到弧线下方，
+// 避免数字贴住圆弧内缘。
 const VIEWBOX_WIDTH = 132;
 const ARC_HEIGHT = 78;
-const CONTAINER_HEIGHT = 90;
+const CONTAINER_HEIGHT = 94;
 
 const normalizedRate = computed(() => {
   const value = Number(props.rate);
@@ -126,7 +126,7 @@ const needle = computed(() => {
       class="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center"
     >
       <span
-        class="font-num text-[20px] leading-none font-medium text-[#f2f2f2]"
+        class="font-num text-[18px] leading-none font-medium text-[#f2f2f2]"
       >
         {{ label }}
       </span>

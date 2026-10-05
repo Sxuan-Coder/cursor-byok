@@ -307,7 +307,7 @@
   "c0c6897a6fe26b9a": "{0} calls",
   "c105f6321090fc09": "Expand group",
   "c18e5e7914ca3eaa": "Failed to fetch the model list",
-  "c1c49f8213ce5791": "Sign in to unlock plugins",
+  "c1c49f8213ce5791": "Sign in to unlock",
   "c1f9e9fc4b0afba1": "Save failed: {0}",
   "c228558cf257fc49": "Delete failed",
   "c2d583a11af308c9": "Batch-added models inherit the selected template's advanced options (reasoning effort, extra params JSON, custom headers, token limits, etc.); model ID and display name come from the fetched list.",
