@@ -8,6 +8,9 @@ import { useMessage } from "@/composables/useMessage";
 import { appState, toggleService } from "@/state/appState";
 import { useRouter } from "vue-router";
 
+// 首页「当前模型配置」卡片暂时隐藏，改动此开关即可恢复显示。
+const SHOW_MODEL_CONFIG_CARD = false;
+
 const router = useRouter();
 const message = useMessage();
 const activeIds = useActiveModelIds();
@@ -36,6 +39,7 @@ function openModelConfig() {
     />
 
     <ModelConfigCard
+      v-if="SHOW_MODEL_CONFIG_CARD"
       :adapters="appState.modelAdapters"
       :active-ids="activeIds"
       @manage="openModelConfig"
